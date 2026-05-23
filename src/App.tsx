@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './App.css'
-import { ModLoaders } from './enums/loaders'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -104,7 +103,7 @@ function App() {
                 >
                   <use href="/icons.svg#bluesky-icon"></use>
                 </svg>
-                Bluesky
+                Bluesky 
               </a>
             </li>
           </ul>
