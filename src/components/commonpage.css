@@ -1,0 +1,41 @@
+.container{
+    width: 100%;
+    padding: 20px 16%;
+    box-sizing: border-box;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.tt {
+    padding: 10px 10px;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tt2  {
+    border-radius: 20px;
+}
+
+.selection {
+    width: fit-content;
+    margin-top: 20px;
+    padding: 5px 5px;
+    border-radius: 20px;
+    color: white;  
+}
