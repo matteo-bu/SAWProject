@@ -22,7 +22,6 @@
 
 .tt {
     padding: 10px 10px;
-    color: white;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -36,6 +35,5 @@
     width: fit-content;
     margin-top: 20px;
     padding: 5px 5px;
-    border-radius: 20px;
-    color: white;  
+    border-radius: 20px; 
 }

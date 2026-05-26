@@ -39,6 +39,10 @@ export const Licenses = [
     "MIT License"
 ]
 
+export const License = [
+    "Open Soource"
+]
+
 export const ModPluginDPCategories = [
   'Adventure',        
   'Cursed',
