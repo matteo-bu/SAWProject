@@ -1,9 +1,9 @@
 import logo from '../assets/logo.png';
-import { Versions } from '../lists/common';
+import { Environments, License, ModPluginDPCategories, Versions } from '../lists/common';
 import { ModLoaders } from '../lists/mods';
 import './commonpage.css';
 import { Discover } from './discover';
-import Menu from './filter';
+import Filter from './filter';
 
 export function Complete(){ //<>    
     return (
@@ -29,8 +29,11 @@ export function Complete(){ //<>
             
             <div className="horizontal">
                 <div className="" style={{width: '20%', marginRight: '10px'}}>
-                    <Menu name="Game Version" list={Versions} bar={true}/>
-                    <Menu name="Loader" list={ModLoaders} bar={true} />
+                    <Filter name="Game Version" list={Versions} bar={true}/>
+                    <Filter name="Loader" list={ModLoaders} bar={true} />
+                    <Filter name="Category" list={ModPluginDPCategories} bar={true} />
+                    <Filter name="Environment" list={Environments} bar={false} />
+                    <Filter name="License" list={License} bar={false} />
                 </div>
 
                 <div className="vertical">

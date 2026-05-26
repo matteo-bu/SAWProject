@@ -3,19 +3,21 @@
   padding: 0;
 }
 
-#root, html, body {
-  font-family: sans-serif;
-  background-color: #16181c;
-}
-
-.bc2 {
-  background-color: #27292e;
-}
-
 :root {
+  --bc1: #16181c;
+  --bc2: #27292e;
   --bc3: #34363c;
   --tc1: white;
   --tc2: #8e9aa7;
+}
+
+#root, html, body {
+  font-family: sans-serif;
+  background-color: var(--bc1);
+}
+
+.bc2 {
+  background-color: var(--bc2);
 }
 
 .bc3 {
@@ -32,4 +34,21 @@
 
 .tc2 {
   color: var(--tc2);
+} 
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bc1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bc2);
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bc3);
 }

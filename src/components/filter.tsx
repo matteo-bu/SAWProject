@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './filter.css';
 
-export default function Menu({ name, bar, list }: { name: string, bar?: boolean, list: string[] }) { //<>
+export default function Filter({ name, bar, list }: { name: string, bar?: boolean, list: string[] }) { //<>
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState('');
 
