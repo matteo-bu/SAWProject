@@ -4,12 +4,6 @@
     box-sizing: border-box;
 }
 
-.top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;    
-}
-
 .horizontal {
     display: flex;
     flex-direction: row;
@@ -36,4 +30,26 @@
     margin-top: 20px;
     padding: 5px 5px;
     border-radius: 20px; 
+}
+
+.search {
+    padding: 10px 16px;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--bc3);
+    color: var(--tc2);
+    height: 30px;
+    font-size: 20px;
+}
+
+.left {
+    width: 20%;
+    margin-right: 10px;
+}
+
+.right {
+    width: 78%;
+    margin-left: 20px;
+    margin-top: 15px;
+    border-radius: 10px;
 }

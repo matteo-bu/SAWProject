@@ -1,0 +1,12 @@
+.menu-wrapper-sort {
+    width: 25%;
+    position: relative;
+    display: inline-block;
+}
+
+.sort {
+    border-radius: 15px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 10px;
+}

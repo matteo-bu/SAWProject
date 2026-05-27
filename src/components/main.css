@@ -1,0 +1,28 @@
+.center {
+    display: flex;
+    justify-content: center; /* centro orizzontale */
+    align-items: center;     /* centro verticale */
+    width: 100%;
+    height: 90vh;
+    margin-top: -50px;        /* altezza schermo */
+}
+
+h1 {
+    font-size: 50px;
+    margin-top: 20px;
+}
+
+.mainbutton {
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--bc2);
+    color: var(--tc1);
+}
+
+.mainbutton:hover {
+    background-color: var(--bc3);
+}
