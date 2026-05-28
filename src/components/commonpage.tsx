@@ -24,7 +24,7 @@ export function Complete(){ //<>
                 </div>
 
                 <div className="vertical right">
-                    <input type="text" className="search tc1" placeholder="Search..." />
+                    <input type="text" className="search" placeholder="Search..." />
                     <Sort/>
                 </div>
             </div>

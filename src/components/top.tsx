@@ -15,7 +15,7 @@ export function Top(){
                     <h3 className="tt">Project</h3>
                 </div>
                 <Discover />
-                <h3 className="tt bc2 bc3h">Settings</h3>
+                <h3 className="tt bc2 bc3h" onClick={() => navigator("/profile")}>Profile</h3>
             </div>
         </>
     );

@@ -1,9 +1,11 @@
 interface User {
     name: string;
-    projects: Project[];
+    progressionnumber: number;
 }
 
 interface Project {
+    userid: string;
+    id: string;
     name: string;
     description: string;
     tags: string[];
@@ -16,10 +18,24 @@ interface Project {
     donation: string;
 }
 
+interface Server {
+    userid: string;
+    id: string;
+    name: string;
+    description: string;
+    tags: string[];
+    issuetracker: string;
+    sourcecode: string;
+    wikipage: string;
+    discord: string;
+    donation: string;
+}
+
 interface File {
+    id: string;
     number: string;
     subtitle: string;
     versions: string[];
     platforms: string[];
-    changelod: string;
+    changelog: string;
 }

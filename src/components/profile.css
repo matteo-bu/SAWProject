@@ -1,0 +1,15 @@
+.emailpassword {
+    padding: 10px 16px;
+    border-radius: 15px;
+    border: none;
+    background-color: var(--bc3);
+    color: var(--tc1);
+    height: 30px;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.emailpasswordwords {
+    font-size: 40px;
+    margin-bottom: 15px;
+}

@@ -4,12 +4,9 @@ export const PluginLoaders = [
   'Paper',  
   'Purpur',
   'Spigot', 
-  'Sponge'
-]
-
-export const PluginPlatforms = [ 
+  'Sponge',
   'BungeeCord', 
   'Geyser Extension', 
   'Velocity', 
-  'Waterfall', 
+  'Waterfall'
 ]
