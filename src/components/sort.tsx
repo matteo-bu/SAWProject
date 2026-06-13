@@ -10,7 +10,7 @@ export function Sort(){
         <div className="menu-wrapper-sort">
             <div className="tt bc2 bc3h sort tc2 begin" onClick={() => setOpen(!open)}>
                 <h3>Sort By: {word}</h3>
-                <h4>{open ? '-' : '+'}</h4>
+                <h3>{open ? '-' : '+'}</h3>
             </div>
 
             <div className={`bc2 dropdown ${open ? "open" : ""}`}>

@@ -37,5 +37,6 @@ interface File {
     subtitle: string;
     versions: string[];
     platforms: string[];
+    downloads: number;
     changelog: string;
 }

@@ -20,6 +20,10 @@ export function Profile(){
 
       const newname = useRef<HTMLInputElement>(null);
       const [name, setName] = useState("");
+
+      const [isDialogOpen, setIsDialogOpen] = useState(false);
+      const [dialogType, setDialogType] = useState("project");
+      const [selectionOpen, setSelectionOpen] = useState(false);
     
       useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -116,18 +120,16 @@ export function Profile(){
 
                       <h1 className="emailpasswordwords tc1">Or Use</h1>
                       <input type="text" className="emailpassword" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                      <input type="password" className="emailpassword" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                      <input type="password" className="emailpassword" placeholder="Password (20 characters min)" value={password} onChange={(e) => setPassword(e.target.value)}/>
                       <h2 className="tc2 tt bc2 bc3h" onClick={login}>Sign In</h2>
-                      <h2 className="tc2 tt bc2 bc3h" onClick={register} style={{ marginTop: "10px" }}>
-                          Register
-                      </h2>
+                      <h2 className="tc2 tt bc2 bc3h" onClick={register} style={{ marginTop: "10px" }}>Register</h2>
                     </div> 
                     :
                     <> 
                       <div className="begin tc1" style={{ marginTop: "20px" }}>
                         <div className="horizontal">
-                          <h3 className="tt bc2 bc3h">New Project</h3>
-                          <h3 className="tt bc2 bc3h" style={{ marginLeft: "10px" }}>New Server</h3>
+                          <h3 className="tt bc2 bc3h" onClick={() => {setIsDialogOpen(true); setDialogType('project')}}>New Project</h3>
+                          <h3 className="tt bc2 bc3h" onClick={() => {setIsDialogOpen(true); setDialogType('server')}} style={{ marginLeft: "10px" }}>New Server</h3>
                         </div>
                         <h3 className="tt bc2 bc3h" onClick={logout}>Sign Out</h3>
                       </div>
@@ -135,10 +137,8 @@ export function Profile(){
 
                       <div className="begin tc1">
                         <div className="horizontal">
-                          <input type="text" className="newname" placeholder="New Name" maxLength={20} ref={newname}/>
-                          <h3 className="tt bc2 bc3h" style={{ marginLeft: "10px" }} onClick={saveName}>
-                            Save New Name
-                          </h3>
+                          <input type="text" className="newname" placeholder="New Name (20 characters max)" maxLength={20} ref={newname}/>
+                          <h3 className="tt bc2 bc3h" style={{ marginLeft: "10px" }} onClick={saveName}>Save New Name</h3>
                         </div>
                         <div className="horizontal">
                           <h3 className="tt bc2 bc3h">Current Name: {name}</h3>
@@ -147,6 +147,39 @@ export function Profile(){
                       <hr className="hr20" />
 
                     </>}
+
+                    { isDialogOpen && (
+                      <div className="overlaydialog" onClick={() => setIsDialogOpen(false)}>
+                        <div className="dialog" onClick={(e) => e.stopPropagation()}>
+                          <div className="top">
+                            <h2 className="tc1">Creating a {dialogType}</h2>
+                            <h2 className="tc1 tt bc3" style={{ padding: "4px 10px" }} onClick={() => setIsDialogOpen(false)}>X</h2>
+                          </div>                          
+                          <hr className="hr20"/>
+                          <h3 className="tc1">Type</h3>
+                            <div className="menu-wrapper" style={{ width: "100%", marginBottom: "10px" }}>
+                              <div className="tt bc3 bc3h sort tc2 begin" onClick={() => setSelectionOpen(!selectionOpen)}>
+                                  <h3>{dialogType}</h3>
+                                  <h3>{selectionOpen ? '-' : '+'}</h3>
+                              </div>
+
+                              <div className={`bc2 dropdown ${selectionOpen ? "open" : ""}`}>
+                                  <p className="bc3h" onClick={() => { setDialogType("project"); setSelectionOpen(false); }}>Project</p>
+                                  <p className="bc3h" onClick={() => { setDialogType("server"); setSelectionOpen(false); }}>Server</p>
+                              </div>
+                            </div>
+                          <h3 className="tc1">Name</h3>
+                          <input type="text" className="bc3 tc1 input" placeholder="Enter name (50 characters max)" maxLength={50} style={{ width: "97%" }}/>
+                          <h3 className="tc1">Summary</h3>
+                          <textarea className="bc3 tc1 input" placeholder="Write something (150 characters max)" maxLength={150} style={{ width: "97%", resize: "none", height: "100px" }}/>
+                          <h5 className="tc2" style={{ marginBottom: "10px" }}>A sentence or two describing the {dialogType}.</h5>
+                          <div className="horizontal" style={{justifyContent: "flex-end" }}>
+                            <h3 className="tt bc3 tc1" style={{ marginRight: "10px" }} onClick={() => setIsDialogOpen(false)}>Cancel</h3>
+                            <h3 className="tt bc3 tc1">Create {dialogType}</h3>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                 
             </div>
         </>
