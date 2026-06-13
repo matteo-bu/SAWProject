@@ -120,7 +120,7 @@ export function Profile(){
 
                       <h1 className="emailpasswordwords tc1">Or Use</h1>
                       <input type="text" className="emailpassword" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                      <input type="password" className="emailpassword" placeholder="Password (20 characters min)" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                      <input type="password" className="emailpassword" placeholder="Password (6-30 characters)" maxLength={30} value={password} onChange={(e) => setPassword(e.target.value)}/>
                       <h2 className="tc2 tt bc2 bc3h" onClick={login}>Sign In</h2>
                       <h2 className="tc2 tt bc2 bc3h" onClick={register} style={{ marginTop: "10px" }}>Register</h2>
                     </div> 
