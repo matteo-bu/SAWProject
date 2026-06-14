@@ -10,7 +10,7 @@ import {
 import type { User } from "firebase/auth";
 import { auth, provider, db } from "../firebase/config";
 import "./profile.css";
-import { doc, getDoc, setDoc } from "@firebase/firestore";
+import { doc, getDoc, runTransaction, setDoc } from "@firebase/firestore";
 
 export function Profile(){
 
@@ -24,6 +24,9 @@ export function Profile(){
       const [isDialogOpen, setIsDialogOpen] = useState(false);
       const [dialogType, setDialogType] = useState("project");
       const [selectionOpen, setSelectionOpen] = useState(false);
+
+      const projectName = useRef<HTMLInputElement>(null);
+      const projectDescription = useRef<HTMLTextAreaElement>(null);
     
       useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -75,7 +78,7 @@ export function Profile(){
         if (!snap.exists()) {
           await setDoc(userRef, {
           name: "exampleName",
-          progressionnumber: 1
+          progressionnumber: 0
           });
         } 
       };
@@ -109,6 +112,45 @@ export function Profile(){
 
         loadName();
       }, [user]);
+
+      const saveProject = async () => {
+        if (!user) return;
+
+        const number = await runTransaction(db, async (transaction) => {
+            const userRef = doc(db, "users", user.uid);
+            const snap = await transaction.get(userRef);
+
+            if (!snap.exists()) {
+              console.log("User document does not exist");
+              return;
+            }
+
+            const currentNumber = snap.data().progressionnumber;
+            const newNumber = currentNumber + 1;
+            transaction.update(userRef, { progressionnumber: newNumber });
+            return newNumber;
+
+          });
+
+        const Ref = doc(db, dialogType+"s", user.uid + number);
+        const pname = projectName.current!.value.trim();
+        const pdescription = projectDescription.current!.value.trim();
+        if (pname === "" || pdescription === "") {
+          return;
+        }
+        
+        try {
+          await setDoc(Ref, {
+            userid: user.uid,
+            name: pname,
+            description: pdescription
+          });
+        } catch (err) {
+          console.log(err);
+        }
+        setIsDialogOpen(false);
+
+      }
 
     return (
         <>
@@ -169,13 +211,13 @@ export function Profile(){
                               </div>
                             </div>
                           <h3 className="tc1">Name</h3>
-                          <input type="text" className="bc3 tc1 input" placeholder="Enter name (50 characters max)" maxLength={50} style={{ width: "97%" }}/>
+                          <input type="text" className="bc3 tc1 input" placeholder="Enter name (50 characters max)" ref={projectName} maxLength={50} style={{ width: "97%" }}/>
                           <h3 className="tc1">Summary</h3>
-                          <textarea className="bc3 tc1 input" placeholder="Write something (150 characters max)" maxLength={150} style={{ width: "97%", resize: "none", height: "100px" }}/>
+                          <textarea className="bc3 tc1 input" placeholder="Write something (150 characters max)" ref={projectDescription} maxLength={150} style={{ width: "97%", resize: "none", height: "100px" }}/>
                           <h5 className="tc2" style={{ marginBottom: "10px" }}>A sentence or two describing the {dialogType}.</h5>
                           <div className="horizontal" style={{justifyContent: "flex-end" }}>
                             <h3 className="tt bc3 tc1" style={{ marginRight: "10px" }} onClick={() => setIsDialogOpen(false)}>Cancel</h3>
-                            <h3 className="tt bc3 tc1">Create {dialogType}</h3>
+                            <h3 className="tt bc3 tc1" onClick={() => saveProject()}>Create {dialogType}</h3>
                           </div>
                         </div>
                       </div>

@@ -5,7 +5,6 @@ interface User {
 
 interface Project {
     userid: string;
-    id: string;
     name: string;
     description: string;
     tags: string[];
@@ -20,7 +19,6 @@ interface Project {
 
 interface Server {
     userid: string;
-    id: string;
     name: string;
     description: string;
     tags: string[];
