@@ -11,6 +11,7 @@ import type { User } from "firebase/auth";
 import { auth, provider, db } from "../firebase/config";
 import "./profile.css";
 import { doc, getDoc, runTransaction, setDoc } from "@firebase/firestore";
+import { ProjectSmall } from "./projectsmall";
 
 export function Profile(){
 
@@ -116,6 +117,12 @@ export function Profile(){
       const saveProject = async () => {
         if (!user) return;
 
+        const pname = projectName.current!.value.trim();
+        const pdescription = projectDescription.current!.value.trim();
+        if (pname === "" || pdescription === "") {
+          return;
+        }
+
         const number = await runTransaction(db, async (transaction) => {
             const userRef = doc(db, "users", user.uid);
             const snap = await transaction.get(userRef);
@@ -133,17 +140,20 @@ export function Profile(){
           });
 
         const Ref = doc(db, dialogType+"s", user.uid + number);
-        const pname = projectName.current!.value.trim();
-        const pdescription = projectDescription.current!.value.trim();
-        if (pname === "" || pdescription === "") {
-          return;
-        }
         
         try {
           await setDoc(Ref, {
             userid: user.uid,
             name: pname,
-            description: pdescription
+            description: pdescription,
+            tags: [],
+            files: [],
+            liecense: "",
+            issuetracker: "",
+            sourcecode: "",
+            wikipage: "",
+            discord: "",
+            donation: ""
           });
         } catch (err) {
           console.log(err);
@@ -222,6 +232,8 @@ export function Profile(){
                         </div>
                       </div>
                     )}
+
+                    <ProjectSmall projectid={"project1"} name={"Name"} author={"Santissimo Pino"} downloads={100} platforms={["Windows", "macOS", "Linux"]} summary={"Nel silenzio della sera, una brezza leggera attraversa il parco e porta con sé profumi lontani, ricordi gentili e nuove possibilità. ogni giorno. ora."} />
                 
             </div>
         </>

@@ -17,6 +17,8 @@ function App() {
           <Route path="/discover/plugins" element={<MainPage />}/>
           <Route path="/discover/servers" element={<MainPage />}/>
           <Route path="/profile" element={<ProfilePage />}/>
+          {/* <Route path="/project/:id" element={<ProjectPage />}/> 
+          <Route path="/server/:id" element={<ServerPage />}/>*/}
         </Routes>
       </BrowserRouter>
     </>
