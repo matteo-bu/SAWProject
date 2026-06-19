@@ -1,9 +1,9 @@
-* {
+*{
   margin: 0;
   padding: 0;
 }
 
-:root {
+:root{
   --bc1: #16181c;
   --bc2: #27292e;
   --bc3: #34363c;
@@ -11,44 +11,44 @@
   --tc2: #8e9aa7;
 }
 
-#root, html, body {
+#root, html, body{
   font-family: sans-serif;
   background-color: var(--bc1);
 }
 
-.bc2 {
+.bc2{
   background-color: var(--bc2);
 }
 
-.bc3 {
+.bc3{
   background-color: var(--bc3);
 }
 
-.bc3h:hover {
+.bc3h:hover{
   background-color: var(--bc3);
 }
 
-.tc1 {
+.tc1{
   color: var(--tc1);
 }
 
-.tc2 {
+.tc2{
   color: var(--tc2);
 } 
 
-::-webkit-scrollbar {
+::-webkit-scrollbar{
     width: 8px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track{
     background: var(--bc1);
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb{
     background: var(--bc2);
     border-radius: 20px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover{
     background: var(--bc3);
 }

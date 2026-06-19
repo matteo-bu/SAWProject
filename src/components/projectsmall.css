@@ -1,4 +1,4 @@
-.pjsmall {
+.pjsmall{
     width: 98.5%;
     height: 100px;
     margin-top: 10px;
@@ -11,7 +11,7 @@
   background-color: rgb(0, 0, 0, 0.5);
 }
 
-.pjsmalldesc {
+.pjsmalldesc{
   white-space: normal;
   overflow-wrap: break-word;
   word-wrap: break-word; /* fallback */

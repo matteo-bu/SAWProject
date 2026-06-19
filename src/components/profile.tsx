@@ -1,5 +1,5 @@
 import { Top } from "./top";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -7,17 +7,20 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword
 } from "firebase/auth";
-import type { User } from "firebase/auth";
 import { auth, provider, db } from "../firebase/config";
 import "./profile.css";
 import { doc, getDoc, runTransaction, setDoc } from "@firebase/firestore";
 import { ProjectSmall } from "./projectsmall";
+import { getData, UserContext } from "../functions/user";
 
 export function Profile(){
 
+      const userC = useContext(UserContext);
+      if (!userC) return;
+      const {user, setUser} = userC;
+
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
-      const [user, setUser] = useState<User | null>(null);
 
       const newname = useRef<HTMLInputElement>(null);
       const [name, setName] = useState("");
@@ -28,7 +31,7 @@ export function Profile(){
 
       const projectName = useRef<HTMLInputElement>(null);
       const projectDescription = useRef<HTMLTextAreaElement>(null);
-    
+
       useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
           setUser(currentUser);
@@ -101,10 +104,9 @@ export function Profile(){
 
       useEffect(() => {
         const loadName = async () => {
-          const currentUser = auth.currentUser;
-          if (!currentUser) return;
+          if (!user) return;
 
-          const snap = await getDoc(doc(db, "users", currentUser.uid));
+          const snap = await getDoc(doc(db, "users", user.uid));
 
           if (snap.exists()) {
             setName(snap.data().name);
@@ -123,21 +125,8 @@ export function Profile(){
           return;
         }
 
-        const number = await runTransaction(db, async (transaction) => {
-            const userRef = doc(db, "users", user.uid);
-            const snap = await transaction.get(userRef);
-
-            if (!snap.exists()) {
-              console.log("User document does not exist");
-              return;
-            }
-
-            const currentNumber = snap.data().progressionnumber;
-            const newNumber = currentNumber + 1;
-            transaction.update(userRef, { progressionnumber: newNumber });
-            return newNumber;
-
-          });
+        const { getProgressionNumber } = getData(user.uid);
+        const number = await getProgressionNumber();
 
         const Ref = doc(db, dialogType+"s", user.uid + number);
         
@@ -147,8 +136,6 @@ export function Profile(){
             name: pname,
             description: pdescription,
             tags: [],
-            files: [],
-            liecense: "",
             issuetracker: "",
             sourcecode: "",
             wikipage: "",
@@ -158,6 +145,20 @@ export function Profile(){
         } catch (err) {
           console.log(err);
         }
+
+        if (dialogType === "project") {
+          try {
+            await setDoc(Ref, {
+              downloads: 0,
+              files: [],
+              license: "",
+            },
+            { merge: true });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+
         setIsDialogOpen(false);
 
       }
@@ -233,7 +234,7 @@ export function Profile(){
                       </div>
                     )}
 
-                    <ProjectSmall projectid={"project1"} name={"Name"} author={"Santissimo Pino"} downloads={100} platforms={["Windows", "macOS", "Linux"]} summary={"Nel silenzio della sera, una brezza leggera attraversa il parco e porta con sé profumi lontani, ricordi gentili e nuove possibilità. ogni giorno. ora."} />
+                    <ProjectSmall type={"project"} projectid={"project1"} name={"Name"} author={"Santissimo Pino"} downloads={100} platforms={["Windows", "macOS", "Linux"]} summary={"Nel silenzio della sera, una brezza leggera attraversa il parco e porta con sé profumi lontani, ricordi gentili e nuove possibilità. ogni giorno. ora."} />
                 
             </div>
         </>

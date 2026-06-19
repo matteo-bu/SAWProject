@@ -1,4 +1,4 @@
-.emailpassword {
+.emailpassword{
     padding: 10px 16px;
     border-radius: 15px;
     border: none;
@@ -10,17 +10,17 @@
     width: 25%;
 }
 
-.emailpasswordwords {
+.emailpasswordwords{
     font-size: 40px;
     margin-bottom: 15px;
 }
 
-.hr20 {
+.hr20{
     Margin-top: 20px;
     Margin-bottom: 20px;
 }
 
-.newname {
+.newname{
     border-radius: 15px;
     border: none;
     background-color: var(--bc3);
@@ -31,7 +31,7 @@
     width: 260px;
 }
 
-.overlaydialog {
+.overlaydialog{
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -41,7 +41,7 @@
   z-index: 1000;
 }
 
-.dialog {
+.dialog{
   background: var(--bc2);
   padding: 24px;
   border-radius: 10px;

@@ -1,4 +1,4 @@
-.center {
+.center{
     display: flex;
     justify-content: center; /* centro orizzontale */
     align-items: center;     /* centro verticale */
@@ -7,12 +7,12 @@
     margin-top: -50px;        /* altezza schermo */
 }
 
-h1 {
+h1{
     font-size: 50px;
     margin-top: 20px;
 }
 
-.mainbutton {
+.mainbutton{
     font-size: 20px;
     padding: 10px 20px;
     border-radius: 10px;
@@ -23,6 +23,6 @@ h1 {
     color: var(--tc1);
 }
 
-.mainbutton:hover {
+.mainbutton:hover{
     background-color: var(--bc3);
 }

@@ -1,10 +1,10 @@
 import { Environments, License, ModPluginDPCategories, Versions } from '../lists/common';
 import { ModLoaders } from '../lists/mods';
 import './commonpage.css';
-import Filter from './filter';
 import { Top } from './top';
 import { Selection } from './selection';
 import { Sort } from './sort';
+import { Filter } from './filter';
 
 export function Complete(){ //<>    
 

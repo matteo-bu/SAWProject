@@ -1,19 +1,20 @@
 import { useNavigate } from "react-router";
 import "./projectsmall.css";
 
-export function ProjectSmall({projectid, name, author, downloads, summary, platforms}:{projectid: string, name: string, author: string, downloads: number, summary: string, platforms: string[]}){
+export function ProjectSmall({type, projectid, name, author, downloads, summary, platforms}:{type: string, projectid: string, name: string, author?: string, downloads?: number, summary: string, platforms: string[]}){
 
     const navigator = useNavigate();
+    if (type != "project" && type != "server") type = "project";
 
     return (
         <>
-            <div className="bc2 bc3h pjsmall" onClick={() => navigator("/project/" + projectid)}>
+            <div className="bc2 bc3h pjsmall" onClick={() => navigator("/" + type + "/" + projectid)}>
                 <div className="begin">
                     <div className="horizontal">
                         <h4 className="tc1">{name}</h4>
-                        <h4 className="tc2" style={{ marginLeft: "-10px" }}>by {author}</h4>
+                        {author && <h4 className="tc2" style={{ marginLeft: "-10px" }}>by {author}</h4>}
                     </div>
-                    <h4 className="tc2">Downloads: {downloads}</h4>
+                    {downloads && <h4 className="tc2">Downloads: {downloads}</h4>}
                 </div>
                 <h4 className="tc2 pjsmalldesc">{summary}</h4>
                 <div className="horizontal" style={{ marginLeft: "8px" }}>
