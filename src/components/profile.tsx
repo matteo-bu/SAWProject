@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { auth, provider, db } from "../firebase/config";
 import "./profile.css";
-import { doc, getDoc, runTransaction, setDoc } from "@firebase/firestore";
+import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { ProjectSmall } from "./projectsmall";
 import { getData, UserContext } from "../functions/user";
 
@@ -73,6 +73,7 @@ export function Profile(){
     
       const logout = async () => {
         await signOut(auth);
+        setName("exampleName");
       };
 
       const userInit = async (uid: string) => {
@@ -199,6 +200,8 @@ export function Profile(){
                       </div>
                       <hr className="hr20" />
 
+                      <ProjectSmall type={"project"} projectid={"project1"} name={"Name"} author={"Santissimo Pino"} downloads={100} platforms={["Windows", "macOS", "Linux"]} summary={"Nel silenzio della sera, una brezza leggera attraversa il parco e porta con sé profumi lontani, ricordi gentili e nuove possibilità. ogni giorno. ora."} />
+
                     </>}
 
                     { isDialogOpen && (
@@ -233,8 +236,6 @@ export function Profile(){
                         </div>
                       </div>
                     )}
-
-                    <ProjectSmall type={"project"} projectid={"project1"} name={"Name"} author={"Santissimo Pino"} downloads={100} platforms={["Windows", "macOS", "Linux"]} summary={"Nel silenzio della sera, una brezza leggera attraversa il parco e porta con sé profumi lontani, ricordi gentili e nuove possibilità. ogni giorno. ora."} />
                 
             </div>
         </>
