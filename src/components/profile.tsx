@@ -30,7 +30,7 @@ export function Profile(){
       const [selectionOpen, setSelectionOpen] = useState(false);
 
       const projectName = useRef<HTMLInputElement>(null);
-      const projectDescription = useRef<HTMLTextAreaElement>(null);
+      const projectSummary = useRef<HTMLTextAreaElement>(null);
 
       useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -121,8 +121,8 @@ export function Profile(){
         if (!user) return;
 
         const pname = projectName.current!.value.trim();
-        const pdescription = projectDescription.current!.value.trim();
-        if (pname === "" || pdescription === "") {
+        const psummary = projectSummary.current!.value.trim();
+        if (pname === "" || psummary === "") {
           return;
         }
 
@@ -135,7 +135,8 @@ export function Profile(){
           await setDoc(Ref, {
             userid: user.uid,
             name: pname,
-            description: pdescription,
+            summary: psummary,
+            description: "",
             tags: [],
             issuetracker: "",
             sourcecode: "",
@@ -227,7 +228,7 @@ export function Profile(){
                           <h3 className="tc1">Name</h3>
                           <input type="text" className="bc3 tc1 input" placeholder="Enter name (50 characters max)" ref={projectName} maxLength={50} style={{ width: "97%" }}/>
                           <h3 className="tc1">Summary</h3>
-                          <textarea className="bc3 tc1 input" placeholder="Write something (150 characters max)" ref={projectDescription} maxLength={150} style={{ width: "97%", resize: "none", height: "100px" }}/>
+                          <textarea className="bc3 tc1 input" placeholder="Write something (150 characters max)" ref={projectSummary} maxLength={150} style={{ width: "97%", resize: "none", height: "100px" }}/>
                           <h5 className="tc2" style={{ marginBottom: "10px" }}>A sentence or two describing the {dialogType}.</h5>
                           <div className="horizontal" style={{justifyContent: "flex-end" }}>
                             <h3 className="tt bc3 tc1" style={{ marginRight: "10px" }} onClick={() => setIsDialogOpen(false)}>Cancel</h3>

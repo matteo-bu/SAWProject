@@ -10,6 +10,7 @@ interface UserFire {
 interface ProjectFire {
     userid: string;
     name: string;
+    summary: string;
     description: string;
     tags: string[];
     downloads: number;
@@ -36,6 +37,7 @@ interface FileFire {
 interface ServerFire {
     userid: string;
     name: string;
+    summary: string;
     description: string;
     tags: string[];
     issuetracker: string;

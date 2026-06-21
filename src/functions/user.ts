@@ -1,5 +1,5 @@
 import type { User } from "firebase/auth";
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { db } from "../firebase/config";
 import { doc, getDoc, runTransaction } from "@firebase/firestore";
 
@@ -32,7 +32,7 @@ export function getData(uid: string){
             const newNumber = currentNumber + 1;
             transaction.update(userRef, { progressionnumber: newNumber });
             return newNumber;
-            });
+        });
 
         return number;
     }

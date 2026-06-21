@@ -1,14 +1,15 @@
-interface Project {
-    userid: string;
+export interface Project {
+    id: string;
+    username: string;
     name: string;
-    description: string;
+    summary: string;
     tags: string[];
     downloads: number;
 }
 
-interface Server {
-    userid: string;
+export interface Server {
+    id: string;
     name: string;
-    description: string;
+    summary: string;
     tags: string[];
 }
