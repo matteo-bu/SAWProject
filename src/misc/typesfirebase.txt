@@ -29,6 +29,7 @@ interface FileFire {
     versions: string[];
     platforms: string[];
     downloads: number;
+    link: string;
     changelog: string;
 }
 

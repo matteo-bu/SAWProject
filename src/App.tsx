@@ -24,7 +24,7 @@ function App() {
             const info = await getProjectInfo(doc.id);
             if (!info) return;
 
-            const { Id, UserId, Name, Summary, Tags, Downloads } = info;
+            const { Id, UserId, Name, Summary, Tags, Downloads, Files, License } = info;
             const { getName } = getData(UserId());
             
             const n: Project = {
@@ -34,7 +34,9 @@ function App() {
               name: Name(),
               summary: Summary(),
               tags: Tags(),
-              downloads: Downloads()
+              downloads: Downloads(),
+              files: Files(),
+              license: License()
             };
             setProjects(p => [...p, n]);
           });

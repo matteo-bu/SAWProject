@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { Project } from "../misc/types";
+import type { Project, File } from "../misc/types";
 import { db } from "../firebase/config";
 import { doc, getDoc } from "@firebase/firestore";
 
@@ -31,6 +31,10 @@ export async function getProjectInfo(uid: string){
         return data.summary || "";
     }
 
+    function Description(): string{
+        return data.description || "";
+    }
+
     function Tags(): string[]{
         return data.tags || [];
     }
@@ -39,6 +43,34 @@ export async function getProjectInfo(uid: string){
         return data.downloads || 0;
     }
 
-    return { Id, UserId, Name, Summary, Tags, Downloads };
+    function Files(): File[]{
+        return data.files || [];
+    }
+
+    function License(): string{
+        return data.license || "";
+    }
+
+    function IssueTracker(): string{
+        return data.issuetracker || "";
+    }
+
+    function SourceCode(): string{
+        return data.sourcecode || "";
+    }
+
+    function WikiPage(): string{
+        return data.wikipage || "";
+    }
+
+    function Discord(): string{
+        return data.discord || "";
+    }
+
+    function Donation(): string{
+        return data.donation || "";
+    }
+
+    return { Id, UserId, Name, Summary, Description, Tags, Downloads, Files, License, IssueTracker, SourceCode, WikiPage, Discord, Donation };
 
 }
