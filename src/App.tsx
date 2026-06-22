@@ -10,6 +10,7 @@ import { getProjectInfo, ProjectContext } from './functions/project';
 import type { Project } from './misc/types';
 import { db } from './firebase/config';
 import { collection, getDocs } from '@firebase/firestore';
+import { ProjectPage } from './pages/project';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             
             const n: Project = {
               id: Id(),
+              userid: UserId(),
               username: await getName() || "",
               name: Name(),
               summary: Summary(),
@@ -35,7 +37,6 @@ function App() {
               downloads: Downloads()
             };
             setProjects(p => [...p, n]);
-            console.log(n);
           });
     } catch (error) {
       console.error("Error loading projects: ", error);
@@ -60,8 +61,8 @@ function App() {
             <Route path="/discover/plugins" element={<MainPage />}/>
             <Route path="/discover/servers" element={<MainPage />}/>
             <Route path="/profile" element={<ProfilePage />}/>
-            {/* <Route path="/project/:id" element={<ProjectPage />}/> 
-            <Route path="/server/:id" element={<ServerPage />}/>*/}
+            <Route path="/project/:id" element={<ProjectPage />}/> 
+            {/*<Route path="/server/:id" element={<ServerPage />}/>*/}
           </Routes>
         </BrowserRouter>
       </UserContext>

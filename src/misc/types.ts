@@ -1,5 +1,6 @@
 export interface Project {
     id: string;
+    userid: string;
     username: string;
     name: string;
     summary: string;

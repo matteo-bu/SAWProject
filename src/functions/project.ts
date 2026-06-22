@@ -16,7 +16,7 @@ export async function getProjectInfo(uid: string){
     const data = snap.data();
 
     function Id(): string{
-        return data.id || "";
+        return uid;
     }
 
     function UserId(): string{

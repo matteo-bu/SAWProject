@@ -12,6 +12,7 @@ import "./profile.css";
 import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { ProjectSmall } from "./projectsmall";
 import { getData, UserContext } from "../functions/user";
+import { ProjectContext } from "../functions/project";
 
 export function Profile(){
 
@@ -31,6 +32,10 @@ export function Profile(){
 
       const projectName = useRef<HTMLInputElement>(null);
       const projectSummary = useRef<HTMLTextAreaElement>(null);
+
+      const projectC = useContext(ProjectContext);
+      if (!projectC) return;
+      const { projects } = projectC;
 
       useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -201,7 +206,9 @@ export function Profile(){
                       </div>
                       <hr className="hr20" />
 
-                      <ProjectSmall type={"project"} projectid={"project1"} name={"Name"} author={"Santissimo Pino"} downloads={100} platforms={["Windows", "macOS", "Linux"]} summary={"Nel silenzio della sera, una brezza leggera attraversa il parco e porta con sé profumi lontani, ricordi gentili e nuove possibilità. ogni giorno. ora."} />
+                      {projects.map((project, index) => (
+                        user.uid === project.userid ? <ProjectSmall key={index} type={"project"} projectid={project.id} name={project.name} author={project.username} downloads={project.downloads} platforms={project.tags} summary={project.summary}/> : null
+                      ))}
 
                     </>}
 

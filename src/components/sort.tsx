@@ -14,9 +14,9 @@ export function Sort(){
             </div>
 
             <div className={`bc2 dropdown ${open ? "open" : ""}`}>
+                <p className="bc3h" onClick={() => { setword("Author"); setOpen(false); }}>Author</p>
+                <p className="bc3h" onClick={() => { setword("Downloads"); setOpen(false); }}>Downloads</p>
                 <p className="bc3h" onClick={() => { setword("Name"); setOpen(false); }}>Name</p>
-                <p className="bc3h" onClick={() => { setword("Date Published"); setOpen(false); }}>Date Published</p>
-                <p className="bc3h" onClick={() => { setword("Date Updated"); setOpen(false); }}>Date Updated</p>
             </div>
         </div>
     );
