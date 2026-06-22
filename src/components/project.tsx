@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { Project, ProjectServerExtra } from '../misc/types';
 import { useParams } from "react-router";
 import { ProjectSmall } from "./projectsmall";
+import "./project.css";
 
 export function Project(){
 
@@ -61,10 +62,67 @@ export function Project(){
             </div>
             <hr className="hr20"/>
 
-            <div className="selection horizontal bc2 tc1">
-                <h4 className="tt tt2 bc3h" onClick={() => setSeeing("description")}>Description</h4>
-                <h4 className="tt tt2 bc3h" onClick={() => setSeeing("versions")}>Versions</h4>   
+            <div className="horizontal">
+                <div className="vertical" style={{width: "70%"}}>
+
+                    <div className="selection horizontal bc2 tc1" style={{marginTop: "0px"}}>
+                        <h4 className="tt tt2 bc3h" onClick={() => setSeeing("description")}>Description</h4>
+                        <h4 className="tt tt2 bc3h" onClick={() => setSeeing("versions")}>Versions</h4>   
+                    </div>
+                    
+                    <div className="projectdesc bc2 tc2">
+                        {
+                            seeing === "description" ? 
+                            <h3>{extra?.description}</h3>
+                            :
+                            <div className="top tc1" style={{justifyContent: "space-around"}}>
+                                <h3>Name</h3>
+                                <h3>Game Versions</h3>
+                                <h3>Platforms</h3>
+                                <h3>Downloads</h3>
+                            </div>
+                        }
+                    </div>
+
+                </div>
+
+                <div className="vertical" style={{width: "28%", marginLeft: "20px", marginTop: "-15px"}}>
+                    
+                    <div className="projectdesc bc2 tc2">
+                        <h3 className="tc1 projecttitle">Versions</h3>
+                    </div>
+
+                    <div className="projectdesc bc2 tc2">
+                        <h3 className="tc1 projecttitle">Platforms</h3>
+                    </div>
+
+                    <div className="projectdesc bc2 tc2">
+                        <h3 className="tc1 projecttitle">Links</h3>
+                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.issuetracker)}>Report Issue</h3>
+                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.sourcecode)}>View Source</h3>
+                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.wikipage)}>Visit Wiki</h3>
+                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.discord)}>Join Discord Server</h3>
+                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.donation)}>Donate</h3>
+                    </div>
+
+                    <div className="projectdesc bc2 tc2">
+                        <h3 className="tc1">Tags</h3>
+                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        {project?.tags.map((tag, index)=> (
+                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{tag}</h4>
+                        ))}
+                        </div>
+                    </div>
+
+                    {<div className="projectdesc bc2 tc2">
+                        <h3 className="tc1 projecttitle">License</h3>
+                        <h3 className="tc2">{project?.license}</h3>
+                    </div>}
+
+                </div>
             </div>
+
+            
 
         </div>
         </>
