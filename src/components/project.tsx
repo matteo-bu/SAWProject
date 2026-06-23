@@ -6,6 +6,7 @@ import type { Project, ProjectServerExtra } from '../misc/types';
 import { useNavigate, useParams } from "react-router";
 import { ProjectSmall } from "./projectsmall";
 import "./project.css";
+import { FileSmall } from "./filesmall";
 
 export function Project(){
 
@@ -89,13 +90,16 @@ export function Project(){
                             <h3>{extra?.description}</h3>
                             :
                             <div>
-                                <div className="top tc1" style={{justifyContent: "space-around"}}>
+                                <div className="top tc1" style={{justifyContent: "space-around", marginRight: "10px"}}>
                                     <h3>Name</h3>
                                     <h3>Game Versions</h3>
                                     <h3>Platforms</h3>
                                     <h3>Downloads</h3>
                                 </div>
                                 <hr className="hr20"/>
+                                {project?.files.map((f, index)=>(
+                                    <FileSmall key={index} fileid={f.id} title={f.title} versions={f.versions} platforms={f.platforms} downloads={f.downloads} />
+                                ))}
                             </div>
                             
                         }

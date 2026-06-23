@@ -1,0 +1,25 @@
+import { useNavigate } from "react-router";
+import "./projectsmall.css";
+
+export function FileSmall({fileid, title, versions, platforms, downloads}:{fileid: string, title: string, versions: string[], platforms: string[], downloads: number}){
+
+    const navigator = useNavigate();
+
+    return (
+        <>
+            <div className="horizontal">
+                    <h3 style={{overflowWrap: "anywhere", width:"25%"}}>{title}</h3>
+                    <div className="horizontal" style={{width:"25%", flexWrap: "wrap", height: "fit-content"}}>{versions.map((v)=>(
+                        <h4 className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", height:"fit-content", cursor: "auto", marginBottom: "10px"}}>{v}</h4>
+                    ))}</div>
+                    <div className="horizontal" style={{width:"25%", flexWrap: "wrap", height: "fit-content"}}>{platforms.map((v)=>(
+                        <h4 className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", height:"fit-content", cursor: "auto", marginBottom: "10px"}}>{v}</h4>
+                    ))}</div>
+                    <h3 style={{width:"20%", textAlign: "center"}}>{downloads}</h3>
+                    <h4 className="tc2 bc3" style={{width:"fit-content", height: "fit-content"}} onClick={() => navigator("/file/" + fileid)}>+</h4>
+                    
+            </div>
+            <hr className="hr20"/>
+        </>
+    );
+}

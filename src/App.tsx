@@ -13,6 +13,7 @@ import { collection, getDocs } from '@firebase/firestore';
 import { ProjectPage } from './pages/project';
 import { ProjectEditGeneralPage } from './pages/projecteditgeneral';
 import { ProjectEditTagsPage } from './pages/projectedittags';
+import { ProjectEditFilesPage } from './pages/projecteditfiles';
 
 function App() {
 
@@ -68,6 +69,7 @@ function App() {
             <Route path="/project/:id" element={<ProjectPage />}/>
             <Route path="/project/:id/edit/general" element={<ProjectEditGeneralPage />}/>
             <Route path="/project/:id/edit/tags" element={<ProjectEditTagsPage />}/>
+            <Route path="/project/:id/edit/files" element={<ProjectEditFilesPage />}/>
             {/*<Route path="/server/:id" element={<ServerPage />}/>*/}
           </Routes>
         </BrowserRouter>
