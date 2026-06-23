@@ -36,14 +36,6 @@ export function Profile(){
       const projectC = useContext(ProjectContext);
       if (!projectC) return;
       const { projects } = projectC;
-
-      useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-          setUser(currentUser);
-        });
-    
-        return () => unsubscribe();
-      }, []);
     
       const loginWithGoogle = async () => {
         try {

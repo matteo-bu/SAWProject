@@ -56,6 +56,10 @@ export function Project(){
         setProject(a);
         setExtra(b);
 
+    }
+
+    function set(){
+
         const v = new Set<string>();
         const p = new Set<string>();
         
@@ -70,13 +74,17 @@ export function Project(){
 
         setVersions([...v]);
         setPlatforms([...p]);
-
     }
 
     useEffect(() => {
         if (!id) return;
         getInfo();
-    }, [id, project?.files]);    
+    }, [id]);
+
+    useEffect(() => {
+        if (!project) return;
+        set();
+    }, [project]);
 
     return (
         <>

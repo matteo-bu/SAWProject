@@ -4,17 +4,18 @@ import { Mods } from './pages/mods'
 import './app.css';
 import { ProfilePage } from './pages/profile';
 import { useEffect, useState } from 'react';
-import type { User } from 'firebase/auth';
+import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getData, UserContext } from './functions/user';
 import { getProjectInfo, ProjectContext } from './functions/project';
 import type { Project } from './misc/types';
-import { db } from './firebase/config';
+import { auth, db } from './firebase/config';
 import { collection, getDocs } from '@firebase/firestore';
 import { ProjectPage } from './pages/project';
 import { ProjectEditGeneralPage } from './pages/projecteditgeneral';
 import { ProjectEditTagsPage } from './pages/projectedittags';
 import { ProjectEditFilesPage } from './pages/projecteditfiles';
 import { FileEditPage } from './pages/fileedit';
+import { FileViewPage } from './pages/fileview';
 
 function App() {
 
@@ -53,6 +54,14 @@ function App() {
     loadProjects();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <>
       <ProjectContext value={{ projects, setProjects }}>
@@ -72,6 +81,7 @@ function App() {
             <Route path="/project/:id/edit/tags" element={<ProjectEditTagsPage />}/>
             <Route path="/project/:id/edit/files" element={<ProjectEditFilesPage />}/>
             <Route path="/project/:id/edit/file/:fileid" element={<FileEditPage />}/>
+            <Route path="/project/:id/:fileid" element={<FileViewPage />}/>
             {/*<Route path="/server/:id" element={<ServerPage />}/>*/}
           </Routes>
         </BrowserRouter>
