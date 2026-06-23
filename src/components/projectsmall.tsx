@@ -19,7 +19,8 @@ export function ProjectSmall({type, projectid, name, author, downloads, summary,
                 <h4 className="tc2 pjsmalldesc">{summary}</h4>
                 <div className="horizontal" style={{ marginLeft: "8px" }}>
                     {platforms.map((platform, index) => (
-                        <h4 key={index} className="tc2 bc3 pjsmalltags" style={{ marginRight: "10px" }}>{platform}</h4>
+                        index < 6 ? 
+                        <h4 key={index} className="tc2 bc3 pjsmalltags" style={{ marginRight: "10px" }}>{platform}</h4> : null
                     ))}
                 </div>
             </div>
