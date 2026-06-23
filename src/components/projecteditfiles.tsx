@@ -53,6 +53,10 @@ export function ProjectEditFiles(){
         setFiles(p => [n, ...p])
     }
 
+    function deleteFile(id: string){
+        setFiles(files.filter((f)=>f.id !== id));
+    }
+
     async function saveFiles(){
         if (!id) return;
 
@@ -88,7 +92,10 @@ export function ProjectEditFiles(){
                 </div>
                 {files.map((f, index)=>(
                     <div>
-                        <h4 className="tc1 bc2" style={{width:"fit-content", marginBottom:"10px"}} onClick={() => navigator("/project/"+id+"/edit/file/"+f.id)}>Edit</h4>
+                        <div className="horizontal" style={{width:"fit-content", marginBottom:"10px"}}>
+                            <h4 className="tc1 bc2" style={{marginRight:"10px"}} onClick={() => navigator("/project/"+id+"/edit/file/"+f.id)}>Edit</h4>
+                            <h4 className="tc1 bc2" onClick={()=>deleteFile(f.id)}>Delete</h4>
+                        </div>
                         <FileSmall key={index} projectid={id || ""} fileid={f.id} title={f.title} versions={f.versions} platforms={f.platforms} downloads={f.downloads} />
                     </div>
                 ))}

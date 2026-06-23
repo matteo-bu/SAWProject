@@ -17,6 +17,9 @@ export function Project(){
     const [extra, setExtra] = useState<ProjectServerExtra | null>(null);
     const [seeing, setSeeing] = useState("description");
 
+    const [versions, setVersions] = useState<string[]>([]);
+    const [platforms, setPlatforms] = useState<string[]>([]);
+
     const userC = useContext(UserContext);
     if (!userC) return;
     const {user} = userC;
@@ -53,12 +56,27 @@ export function Project(){
         setProject(a);
         setExtra(b);
 
+        const v = new Set<string>();
+        const p = new Set<string>();
+        
+        project?.files.forEach((f)=>{
+            f.versions.forEach((ver)=>{
+                v.add(ver);
+            })
+            f.platforms.forEach((plat)=>{
+                p.add(plat)
+            })
+        })
+
+        setVersions([...v]);
+        setPlatforms([...p]);
+
     }
 
     useEffect(() => {
         if (!id) return;
         getInfo();
-    }, [id]);    
+    }, [id, project?.files]);    
 
     return (
         <>
@@ -109,23 +127,37 @@ export function Project(){
 
                 <div className="vertical" style={{width: "28%", marginLeft: "20px", marginTop: "-15px"}}>
                     
+                    {   versions.length > 0 ?
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">Versions</h3>
-                    </div>
+                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        {versions.map((v, index)=> (
+                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{v}</h4>
+                        ))}
+                        </div>
+                    </div>: null}
 
+                    {   platforms.length > 0 ? 
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">Platforms</h3>
-                    </div>
+                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        {platforms.map((p, index)=> (
+                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{p}</h4>
+                        ))}
+                        </div>
+                    </div>: null}
 
+                    {   extra?.issuetracker || extra?.sourcecode || extra?.wikipage || extra?.discord || extra?.donation ?
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">Links</h3>
-                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.issuetracker)}>Report Issue</h3>
-                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.sourcecode)}>View Source</h3>
-                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.wikipage)}>Visit Wiki</h3>
-                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.discord)}>Join Discord Server</h3>
-                        <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.donation)}>Donate</h3>
-                    </div>
+                        {extra.issuetracker? <h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.issuetracker)}>Report Issue</h3> : null}
+                        {extra.sourcecode?<h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.sourcecode)}>View Source</h3> : null}
+                        {extra.wikipage?<h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.wikipage)}>Visit Wiki</h3> : null}
+                        {extra.discord?<h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.discord)}>Join Discord Server</h3> : null}
+                        {extra.donation?<h3 className="tt tt2 bc3h" onClick={() => window.open(extra?.donation)}>Donate</h3> : null}
+                    </div> : null}
 
+                    {   project?.tags.length || 0 > 0 ?
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1">Tags</h3>
                         <div className="horizontal" style={{flexWrap: "wrap"}}>
@@ -133,12 +165,12 @@ export function Project(){
                             <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{tag}</h4>
                         ))}
                         </div>
-                    </div>
+                    </div> : null}
 
-                    {<div className="projectdesc bc2 tc2">
+                    <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">License</h3>
                         <h3 className="tc2">{project?.license}</h3>
-                    </div>}
+                    </div>
 
                 </div>
             </div>
