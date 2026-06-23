@@ -1,18 +1,24 @@
 import { Top } from "./top";
 import { getProjectInfo } from "../functions/project";
-import { getData } from "../functions/user";
-import { useEffect, useState } from "react";
+import { getData, UserContext } from "../functions/user";
+import { useContext, useEffect, useState } from "react";
 import type { Project, ProjectServerExtra } from '../misc/types';
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { ProjectSmall } from "./projectsmall";
 import "./project.css";
 
 export function Project(){
 
+    const navigator = useNavigate();
+
     const { id } = useParams();
     const [project, setProject] = useState<Project | null>(null);
     const [extra, setExtra] = useState<ProjectServerExtra | null>(null);
     const [seeing, setSeeing] = useState("description");
+
+    const userC = useContext(UserContext);
+    if (!userC) return;
+    const {user} = userC;
 
     async function getInfo(){
 
@@ -65,9 +71,16 @@ export function Project(){
             <div className="horizontal">
                 <div className="vertical" style={{width: "70%"}}>
 
-                    <div className="selection horizontal bc2 tc1" style={{marginTop: "0px"}}>
-                        <h4 className="tt tt2 bc3h" onClick={() => setSeeing("description")}>Description</h4>
-                        <h4 className="tt tt2 bc3h" onClick={() => setSeeing("versions")}>Versions</h4>   
+                    <div className="horizontal">
+                        <div className="selection horizontal bc2 tc1" style={{marginTop: "0px"}}>
+                            <h4 className="tt tt2 bc3h" onClick={() => setSeeing("description")}>Description</h4>
+                            <h4 className="tt tt2 bc3h" onClick={() => setSeeing("versions")}>Versions</h4>   
+                        </div>
+                        { user?.uid == project?.userid ? 
+                        <div className="selection horizontal bc2 tc1" style={{marginTop: "0px", marginLeft: "15px"}}>
+                            <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/general")}>Edit</h4>
+                        </div> : null
+                        }   
                     </div>
                     
                     <div className="projectdesc bc2 tc2">
@@ -75,12 +88,16 @@ export function Project(){
                             seeing === "description" ? 
                             <h3>{extra?.description}</h3>
                             :
-                            <div className="top tc1" style={{justifyContent: "space-around"}}>
-                                <h3>Name</h3>
-                                <h3>Game Versions</h3>
-                                <h3>Platforms</h3>
-                                <h3>Downloads</h3>
+                            <div>
+                                <div className="top tc1" style={{justifyContent: "space-around"}}>
+                                    <h3>Name</h3>
+                                    <h3>Game Versions</h3>
+                                    <h3>Platforms</h3>
+                                    <h3>Downloads</h3>
+                                </div>
+                                <hr className="hr20"/>
                             </div>
+                            
                         }
                     </div>
 

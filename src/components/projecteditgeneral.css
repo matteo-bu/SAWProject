@@ -1,0 +1,19 @@
+.projecteditarea{
+    width: 98%;
+    height: 60px;
+    border: none;
+    padding: 5px 8px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.pmt10{
+  margin-top: 10px;
+}
+
+.pml10{
+  margin-left: 10px;
+}

@@ -11,6 +11,7 @@ import type { Project } from './misc/types';
 import { db } from './firebase/config';
 import { collection, getDocs } from '@firebase/firestore';
 import { ProjectPage } from './pages/project';
+import { ProjectEditGeneralPage } from './pages/projecteditgeneral';
 
 function App() {
 
@@ -63,7 +64,8 @@ function App() {
             <Route path="/discover/plugins" element={<MainPage />}/>
             <Route path="/discover/servers" element={<MainPage />}/>
             <Route path="/profile" element={<ProfilePage />}/>
-            <Route path="/project/:id" element={<ProjectPage />}/> 
+            <Route path="/project/:id" element={<ProjectPage />}/>
+            <Route path="/project/:id/edit/general" element={<ProjectEditGeneralPage />}/>
             {/*<Route path="/server/:id" element={<ServerPage />}/>*/}
           </Routes>
         </BrowserRouter>
