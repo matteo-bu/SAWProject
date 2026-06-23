@@ -158,7 +158,7 @@ export function Profile(){
             await setDoc(Ref, {
               downloads: 0,
               files: [],
-              license: "",
+              license: "All Rights Reserved",
             },
             { merge: true });
           } catch (err) {

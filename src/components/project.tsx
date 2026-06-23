@@ -98,7 +98,7 @@ export function Project(){
                                 </div>
                                 <hr className="hr20"/>
                                 {project?.files.map((f, index)=>(
-                                    <FileSmall key={index} fileid={f.id} title={f.title} versions={f.versions} platforms={f.platforms} downloads={f.downloads} />
+                                    <FileSmall key={index} projectid={id || ""} fileid={f.id} title={f.title} versions={f.versions} platforms={f.platforms} downloads={f.downloads} />
                                 ))}
                             </div>
                             

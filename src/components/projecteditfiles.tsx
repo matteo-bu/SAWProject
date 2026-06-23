@@ -71,7 +71,7 @@ export function ProjectEditFiles(){
         <>
             <div className="container">
                 <Top/>
-                <div className="horizontal">
+                <div className="horizontal" style={{marginBottom: "30px"}}>
                     <div className="selection horizontal bc2 tc1">
                         <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/general")}>General</h4>
                         <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/tags")}>Tags</h4>
@@ -87,7 +87,10 @@ export function ProjectEditFiles(){
                     </div>
                 </div>
                 {files.map((f, index)=>(
-                    <FileSmall key={index} fileid={f.id} title={f.title} versions={f.versions} platforms={f.platforms} downloads={f.downloads} />
+                    <div>
+                        <h4 className="tc1 bc2" style={{width:"fit-content", marginBottom:"10px"}} onClick={() => navigator("/project/"+id+"/edit/file/"+f.id)}>Edit</h4>
+                        <FileSmall key={index} projectid={id || ""} fileid={f.id} title={f.title} versions={f.versions} platforms={f.platforms} downloads={f.downloads} />
+                    </div>
                 ))}
                 
             </div>

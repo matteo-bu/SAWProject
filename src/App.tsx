@@ -14,6 +14,7 @@ import { ProjectPage } from './pages/project';
 import { ProjectEditGeneralPage } from './pages/projecteditgeneral';
 import { ProjectEditTagsPage } from './pages/projectedittags';
 import { ProjectEditFilesPage } from './pages/projecteditfiles';
+import { FileEditPage } from './pages/fileedit';
 
 function App() {
 
@@ -70,6 +71,7 @@ function App() {
             <Route path="/project/:id/edit/general" element={<ProjectEditGeneralPage />}/>
             <Route path="/project/:id/edit/tags" element={<ProjectEditTagsPage />}/>
             <Route path="/project/:id/edit/files" element={<ProjectEditFilesPage />}/>
+            <Route path="/project/:id/edit/file/:fileid" element={<FileEditPage />}/>
             {/*<Route path="/server/:id" element={<ServerPage />}/>*/}
           </Routes>
         </BrowserRouter>
