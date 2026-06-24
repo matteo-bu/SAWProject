@@ -5,6 +5,8 @@ import { getProjectInfo } from "../functions/project";
 import { useEffect, useState } from "react";
 import type { File } from "../misc/types";
 import { FileSmall } from "./filesmall";
+import { doc, increment, runTransaction, updateDoc } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 export function FileView(){
 
@@ -29,6 +31,34 @@ export function FileView(){
         getInfo();
     }, [id, fileid]);
 
+    async function handleDownload(){
+        if(!id) return;
+        try {
+            await updateDoc(
+            doc(db, "projects", id),
+            {
+                downloads: increment(1)
+            }
+            );
+        } catch (err) {
+            console.error(err);
+        }
+
+        await runTransaction(db, async (transaction) => {
+            const snap = await transaction.get(doc(db, "projects", id));
+        
+            if (!snap.exists()) {
+                console.log("Project document does not exist");
+                return;
+            }
+        
+            const files = [...snap.data().files];
+            const f = files.findIndex(x=>x.id == fileid);
+            files[f].downloads+=1;
+            transaction.update(doc(db, "projects", id), {files});
+        });
+    }
+
     return (
         <>
             <div className="container">
@@ -41,7 +71,7 @@ export function FileView(){
                         <h3 className="tc1" style={{marginBottom: "10px"}}>Changelog</h3>
                         <h4 className="tc2 bc2" style={{overflowWrap: "break-word", cursor: "auto", width: "fit-content"}}>{file?.changelog || "No Changelog"}</h4>
                     </div>
-                    <h4 className="tc1 bc2 bc3h" style={{width: "fit-content", height:"fit-content", marginLeft: "20px"}} onClick={() => window.open(file?.link)}>Download</h4>
+                    <h4 className="tc1 bc2 bc3h" style={{width: "fit-content", height:"fit-content", marginLeft: "20px"}} onClick={() => {handleDownload(); window.open(file?.link)}}>Download</h4>
                 </div>
             </div>
         </>

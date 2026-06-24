@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router";
 import { Top } from "./top";
 import { useEffect, useRef} from "react";
-import { doc, setDoc } from "@firebase/firestore";
+import { deleteDoc, doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import { getServerInfo } from "../functions/server";
 
@@ -170,13 +170,23 @@ export function ServerEditGeneral(){
         }
     }
 
+    async function deleteServer(){
+        if(!id) return;
+        await deleteDoc(doc(db, "servers", id));
+    }
+
     return (
         <>
             <div className="container">
                 <Top/>
-                <div className="selection horizontal bc2 tc1">
-                    <h4 className="tt tt2 bc3h" onClick={() => navigator("/server/"+id+"/edit/general")}>General</h4>
-                    <h4 className="tt tt2 bc3h" onClick={() => navigator("/server/"+id+"/edit/tags")}>Tags And Versions</h4>
+                <div className="horizontal">
+                    <div className="selection horizontal bc2 tc1">
+                        <h4 className="tt tt2 bc3h" onClick={() => navigator("/server/"+id+"/edit/general")}>General</h4>
+                        <h4 className="tt tt2 bc3h" onClick={() => navigator("/server/"+id+"/edit/tags")}>Tags And Versions</h4>
+                    </div>
+                    <div className="selection horizontal bc2 tc1" style={{marginLeft:"30px",backgroundColor:"red"}}>
+                        <h4 className="tt tt2 bc3h" onClick={() => {deleteServer(); navigator("/profile")}}>Delete Server</h4>
+                    </div>
                 </div>
 
                 <div style={{marginTop: "30px"}}>

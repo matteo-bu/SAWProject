@@ -4,7 +4,7 @@ import "./projecteditgeneral.css";
 import { useEffect, useRef, useState } from "react";
 import { Licenses } from "../lists/common";
 import { getProjectInfo } from "../functions/project";
-import { doc, setDoc } from "@firebase/firestore";
+import { deleteDoc, doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 
 export function ProjectEditGeneral(){
@@ -174,14 +174,24 @@ export function ProjectEditGeneral(){
         }
     }
 
+    async function deleteProject(){
+        if(!id) return;
+        await deleteDoc(doc(db, "projects", id));
+    }
+
     return (
         <>
             <div className="container">
                 <Top/>
-                <div className="selection horizontal bc2 tc1">
-                    <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/general")}>General</h4>
-                    <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/tags")}>Tags</h4>
-                    <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/files")}>Files</h4>
+                <div className="horizontal">
+                    <div className="selection horizontal bc2 tc1">
+                        <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/general")}>General</h4>
+                        <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/tags")}>Tags</h4>
+                        <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/files")}>Files</h4>
+                    </div>
+                    <div className="selection horizontal bc2 tc1" style={{marginLeft:"30px",backgroundColor:"red"}}>
+                        <h4 className="tt tt2 bc3h" onClick={() => {deleteProject(); navigator("/profile")}}>Delete Project</h4>
+                    </div>
                 </div>
 
                 <div style={{marginTop: "30px"}}>
