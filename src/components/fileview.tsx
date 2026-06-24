@@ -55,7 +55,7 @@ export function FileView(){
             const files = [...snap.data().files];
             const f = files.findIndex(x=>x.id == fileid);
             files[f].downloads+=1;
-            transaction.update(doc(db, "projects", id), {files});
+            transaction.update(doc(db, "projects", id), {files: files});
         });
     }
 

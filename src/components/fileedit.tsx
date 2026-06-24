@@ -146,9 +146,12 @@ export function FileEdit(){
 
     return ( status == "nf" ? 
         <>  
-            <div className="tc1" style={{textAlign: "center"}}>
-            <h1>File Not Found</h1>
-            <h1>Remember To Save A File Before Editing</h1>
+            <div className="container">
+                <Top/>
+                <div className="tc1" style={{textAlign: "center"}}>
+                <h1>File Not Found</h1>
+                <h1>Remember To Save A File Before Editing</h1>
+                </div>
             </div>
         </> :
         <>

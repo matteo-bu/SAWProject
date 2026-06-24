@@ -1,9 +1,12 @@
 import { useState } from "react";
 import './filter.css';
+import { filtering } from "../functions/filtering";
 
-export function Filter({ name, bar, list }: { name: string, bar?: boolean, list: string[] }) { //<>
+export function Filter({ type, name, bar, list }: { type: string, name: string, bar?: boolean, list: string[] }) { //<>
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState('');
+
+    const { handleClick } = filtering();
 
     return (
         <div className="bc2 box">
@@ -19,9 +22,9 @@ export function Filter({ name, bar, list }: { name: string, bar?: boolean, list:
             
             <div className="">
                 {filter === '' ? list.map((version) => {
-                        return <h4 className="bc3h tc2" key={version}>{version}</h4>
+                        return <h4 className="bc3h tc2" key={version} onClick={()=>handleClick(type, version)}>{version}</h4>
                     }) : list.filter((version) => version.toLowerCase().includes(filter.toLowerCase())).map((version) => {
-                        return <h4 className="bc3h tc2" key={version}>{version}</h4>
+                        return <h4 className="bc3h tc2" key={version} onClick={()=>handleClick(type, version)}>{version}</h4>
                     })
                 
                 }

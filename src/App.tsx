@@ -28,10 +28,10 @@ function App() {
   const [projects, setProjects] = useState<Project[] | []>([]);
   const [servers, setServers] = useState<Server[]>([]);
 
-  const [versions, setVersions] = useState<string []>(["1.7.10","1.8"]);
-  const [loaders, setLoaders] = useState<string []>(["NeoForge","Forge"]);
-  const [categorys, setCategorys] = useState<string []>(["Minigame","Food"]);
-  const [license, setLicense] = useState("s");
+  const [versions, setVersions] = useState<string []>([]);
+  const [loaders, setLoaders] = useState<string []>([]);
+  const [categorys, setCategorys] = useState<string []>([]);
+  const [license, setLicense] = useState("");
   const [sortBy, setSortBy] = useState("Downloads");
   const [search, setSearch] = useState("");
 
