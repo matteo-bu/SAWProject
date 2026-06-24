@@ -6,7 +6,9 @@ export function Filter({ type, name, bar, list }: { type: string, name: string, 
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState('');
 
-    const { handleClick } = filtering();
+    const f = filtering();
+    if (!f) return;
+    const { handleClick } = f;
 
     return (
         <div className="bc2 box">

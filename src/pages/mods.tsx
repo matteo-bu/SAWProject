@@ -7,9 +7,9 @@ import { ModLoaders } from "../lists/mods";
 import { Selection } from '../components/selection';
 import { ProjectContext } from "../functions/project";
 import { useContext } from "react";
-import { CategorysContext, filtering, LicenseContext, LoadersContext, SearchContext, SortByContext, VersionsContext } from "../functions/filtering";
+import { filtering, VersionsContext } from "../functions/filtering";
 
-export function Mods(){
+export function ModsPage(){
 
     const projectC = useContext(ProjectContext);
     if (!projectC) return;
@@ -19,25 +19,9 @@ export function Mods(){
     if (!versionC) return;
     const { versions } = versionC;
 
-    const loaderC = useContext(LoadersContext);
-    if (!loaderC) return;
-    const { loaders} = loaderC;
-
-    const categoryC = useContext(CategorysContext);
-    if (!categoryC) return;
-    const { categorys} = categoryC;
-
-    const licenseC = useContext(LicenseContext);
-    if (!licenseC) return;
-    const { license} = licenseC;
-
-    const searchC = useContext(SearchContext);
-    if (!searchC) return;
-    const { search} = searchC;
-
     const filter = filtering();
     if (!filter) return;
-    const { sort } = filter;
+    const { filterPlatform, filterCategory, filterLicense, filterName, sort } = filter;
 
     const p1 = projects.filter((p)=>{
         const files = p.files;
@@ -65,33 +49,10 @@ export function Mods(){
         })
         return copy.length == 0;
     });
-    const p3 = p2.filter((p)=>{
-        let copy = [...loaders];
-        const files = p.files;
-        files.forEach((file)=>{
-            const platforms = file.platforms;
-            platforms.forEach((platform)=>{
-                copy = copy.filter((old)=>old != platform);
-            })
-        })
-        return copy.length == 0;
-    });
-    const p4 = p3.filter((p)=>{
-        let copy = [...categorys];
-        const files = p.tags;
-        files.forEach((t)=>{
-            copy = copy.filter((old)=>old != t);
-        })
-        return copy.length == 0;
-    });
-    const p5 = p4.filter((p)=>{
-        if (!license) return true;
-        return ["Apache License 2.0",
-                "MIT License"].includes(p.license);
-    });
-    const p6 = p5.filter((p)=>(
-        p.name.includes(search)
-    ))
+    const p3 = filterPlatform(p2);
+    const p4 = filterCategory(p3);
+    const p5 = filterLicense(p4);
+    const p6 = filterName(p5);
     sort(p6);
     const filteredProjects = p6;
 

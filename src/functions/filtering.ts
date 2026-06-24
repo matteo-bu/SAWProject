@@ -30,6 +30,10 @@ export function filtering(){
     if (!sortC) return;
     const { sortBy } = sortC;
 
+    const searchC = useContext(SearchContext);
+    if (!searchC) return;
+    const { search} = searchC;
+
     function handleClick(type: string, s: string){
         switch (type){
             case "v": !versions.includes(s) ? setVersions((old)=>[...old,s]) : setVersions(versions.filter((old)=>old != s)); break;
@@ -37,6 +41,43 @@ export function filtering(){
             case "c": !categorys.includes(s) ? setCategorys((old)=>[...old,s]) : setCategorys(categorys.filter((old)=>old != s)); break;
             default: license == "" ? setLicense("x") : setLicense("");
         }
+    }
+
+    function filterPlatform(projects: Project[]): Project[]{
+        return projects.filter((p)=>{
+            let copy = [...loaders];
+            const files = p.files;
+            files.forEach((file)=>{
+                const platforms = file.platforms;
+                platforms.forEach((platform)=>{
+                    copy = copy.filter((old)=>old != platform);
+                })
+            })
+            return copy.length == 0;
+        });
+    }
+
+    function filterCategory(projects: Project[]): Project[]{
+        return projects.filter((p)=>{
+            let copy = [...categorys];
+            const tags = p.tags;
+            tags.forEach((t)=>{
+                copy = copy.filter((old)=>old != t);
+            })
+            return copy.length == 0;
+        });
+    }
+
+    function filterLicense(projects: Project[]): Project[]{
+        return projects.filter((p)=>{
+            if (!license) return true;
+            return ["Apache License 2.0",
+                    "MIT License"].includes(p.license);
+        });
+    }
+
+    function filterName(projects: Project[]): Project[]{
+        return projects.filter((p)=>p.name.includes(search));
     }
 
     function sort(projects: Project[]){
@@ -49,6 +90,6 @@ export function filtering(){
         })
     }
 
-    return { handleClick, sort };
+    return { handleClick, filterPlatform, filterCategory, filterLicense, filterName, sort };
 
 }

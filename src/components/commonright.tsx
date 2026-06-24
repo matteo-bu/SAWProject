@@ -38,8 +38,8 @@ export function CommonRight(){
                     versions.length > 0 ? 
                     <div className="horizontal" style={{flexWrap: "wrap"}}>
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setVersions([])}>Versions</h4>
-                    {versions.map((v)=>(
-                        <p className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("v",v)}>{v}</p>
+                    {versions.map((v, i)=>(
+                        <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("v",v)}>{v}</p>
                     ))}
                     </div> : null
                 }
@@ -47,8 +47,8 @@ export function CommonRight(){
                     loaders.length > 0 ? 
                     <div className="horizontal" style={{flexWrap: "wrap"}}>
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setLoaders([])}>Loaders</h4>
-                    {loaders.map((v)=>(
-                        <p className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("l",v)}>{v}</p>
+                    {loaders.map((v, i)=>(
+                        <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("l",v)}>{v}</p>
                     ))}
                     </div> : null
                 }
@@ -56,8 +56,8 @@ export function CommonRight(){
                     categorys.length > 0 ? 
                     <div className="horizontal" style={{flexWrap: "wrap"}}>
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setCategorys([])}>Misc</h4>
-                    {categorys.map((v)=>(
-                        <p className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("c",v)}>{v}</p>
+                    {categorys.map((v, i)=>(
+                        <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("c",v)}>{v}</p>
                     ))}
                     </div> : null
                 }

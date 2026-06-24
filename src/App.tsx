@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes} from 'react-router'
 import { MainPage } from './pages/main'
-import { Mods } from './pages/mods'
+import { ModsPage } from './pages/mods'
 import './app.css';
 import { ProfilePage } from './pages/profile';
 import { useEffect, useState } from 'react';
@@ -21,6 +21,11 @@ import { ServerPage } from './pages/server';
 import { ServerEditGeneralPage } from './pages/servereditgeneral';
 import { ServerEditTagsPage } from './pages/serveredittags';
 import { CategorysContext, LicenseContext, LoadersContext, SearchContext, SortByContext, VersionsContext } from './functions/filtering';
+import { ResourcePacksPage } from './pages/resourcepacks';
+import { DataPacksPage } from './pages/datapacks';
+import { ShadersPage } from './pages/shaders';
+import { PluginsPage } from './pages/plugns';
+import { ServersPage } from './pages/servers';
 
 function App() {
 
@@ -114,12 +119,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainPage />}/>
-            <Route path="/discover/mods" element={<Mods />}/>
-            <Route path="/discover/resourcepacks" element={<MainPage />}/>
-            <Route path="/discover/datapacks" element={<MainPage />}/>
-            <Route path="/discover/shaders" element={<MainPage />}/>
-            <Route path="/discover/plugins" element={<MainPage />}/>
-            <Route path="/discover/servers" element={<MainPage />}/>
+            <Route path="/discover/mods" element={<ModsPage />}/>
+            <Route path="/discover/resourcepacks" element={<ResourcePacksPage />}/>
+            <Route path="/discover/datapacks" element={<DataPacksPage />}/>
+            <Route path="/discover/shaders" element={<ShadersPage />}/>
+            <Route path="/discover/plugins" element={<PluginsPage />}/>
+            <Route path="/discover/servers" element={<ServersPage />}/>
             <Route path="/profile" element={<ProfilePage />}/>
             <Route path="/project/:id" element={<ProjectPage />}/>
             <Route path="/project/:id/edit/general" element={<ProjectEditGeneralPage />}/>
