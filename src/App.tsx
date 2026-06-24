@@ -20,12 +20,20 @@ import { getServerInfo, ServerContext } from './functions/server';
 import { ServerPage } from './pages/server';
 import { ServerEditGeneralPage } from './pages/servereditgeneral';
 import { ServerEditTagsPage } from './pages/serveredittags';
+import { CategorysContext, LicenseContext, LoadersContext, SearchContext, SortByContext, VersionsContext } from './functions/filtering';
 
 function App() {
 
   const [user, setUser] = useState<User | null>(null);
   const [projects, setProjects] = useState<Project[] | []>([]);
   const [servers, setServers] = useState<Server[]>([]);
+
+  const [versions, setVersions] = useState<string []>(["1.7.10","1.8"]);
+  const [loaders, setLoaders] = useState<string []>(["NeoForge","Forge"]);
+  const [categorys, setCategorys] = useState<string []>(["Minigame","Food"]);
+  const [license, setLicense] = useState("s");
+  const [sortBy, setSortBy] = useState("Downloads");
+  const [search, setSearch] = useState("");
 
   async function loadProjects(){
     try {
@@ -94,6 +102,12 @@ function App() {
 
   return (
     <>
+      <SearchContext value={{search, setSearch}}>
+      <SortByContext value={{sortBy, setSortBy}}>
+      <VersionsContext value={{versions, setVersions}}>
+      <LoadersContext value={{loaders, setLoaders}}>
+      <CategorysContext value={{categorys, setCategorys}}>
+      <LicenseContext value={{license, setLicense}}>
       <ServerContext value={{ servers, setServers }}>
       <ProjectContext value={{ projects, setProjects }}>
       <UserContext value={{ user, setUser }}>
@@ -121,6 +135,12 @@ function App() {
       </UserContext>
       </ProjectContext>
       </ServerContext>
+      </LicenseContext>
+      </CategorysContext>
+      </LoadersContext>
+      </VersionsContext>
+      </SortByContext>
+      </SearchContext>
     </>
   )
 }

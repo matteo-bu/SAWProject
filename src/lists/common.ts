@@ -40,7 +40,7 @@ export const Licenses = [
 ]
 
 export const License = [
-    "Open Soource"
+    "Open Source"
 ]
 
 export const ModPluginDPCategories = [
@@ -68,9 +68,4 @@ export const ModPluginDPCategories = [
 export const PackLoaders = [
     "Datapack",
     "Resourcepack"
-]
-
-export const Environments = [
-    "Client",
-    "Server"
 ]

@@ -18,7 +18,7 @@ export function Profile(){
 
       const userC = useContext(UserContext);
       if (!userC) return;
-      const {user, setUser} = userC;
+      const {user} = userC;
 
       const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
