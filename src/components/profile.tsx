@@ -4,7 +4,6 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  onAuthStateChanged,
   createUserWithEmailAndPassword
 } from "firebase/auth";
 import { auth, provider, db } from "../firebase/config";
@@ -13,6 +12,7 @@ import { doc, getDoc, setDoc } from "@firebase/firestore";
 import { ProjectSmall } from "./projectsmall";
 import { getData, UserContext } from "../functions/user";
 import { ProjectContext } from "../functions/project";
+import { ServerContext } from "../functions/server";
 
 export function Profile(){
 
@@ -36,6 +36,10 @@ export function Profile(){
       const projectC = useContext(ProjectContext);
       if (!projectC) return;
       const { projects } = projectC;
+
+      const serverC = useContext(ServerContext);
+      if (!serverC) return;
+      const { servers } = serverC;
     
       const loginWithGoogle = async () => {
         try {
@@ -133,7 +137,7 @@ export function Profile(){
             userid: user.uid,
             name: pname,
             summary: psummary,
-            description: "",
+            description: "No Description",
             tags: [],
             issuetracker: "",
             sourcecode: "",
@@ -151,6 +155,18 @@ export function Profile(){
               downloads: 0,
               files: [],
               license: "All Rights Reserved",
+            },
+            { merge: true });
+          } catch (err) {
+            console.log(err);
+          }
+        }
+
+        if (dialogType === "server") {
+          try {
+            await setDoc(Ref, {
+              ip: "No IP Yet",
+              versions: []
             },
             { merge: true });
           } catch (err) {
@@ -200,6 +216,10 @@ export function Profile(){
 
                       {projects.map((project, index) => (
                         user.uid === project.userid ? <ProjectSmall key={index} type={"project"} projectid={project.id} name={project.name} author={project.username} downloads={project.downloads} platforms={project.tags} summary={project.summary}/> : null
+                      ))}
+
+                      {servers.map((server, index) => (
+                        user.uid === server.userid ? <ProjectSmall key={index} type={"server"} projectid={server.id} name={server.name} platforms={server.tags} summary={server.summary}/> : null
                       ))}
 
                     </>}

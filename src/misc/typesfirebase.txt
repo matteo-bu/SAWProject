@@ -38,9 +38,11 @@ interface FileFire {
 interface ServerFire {
     userid: string;
     name: string;
+    ip: string;
     summary: string;
     description: string;
     tags: string[];
+    versions: string[];
     issuetracker: string;
     sourcecode: string;
     wikipage: string;

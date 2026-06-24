@@ -16,7 +16,7 @@ export function FileSmall({projectid, fileid, title, versions, platforms, downlo
                         <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", height:"fit-content", cursor: "auto", marginBottom: "10px"}}>{v}</h4>
                     ))}</div>
                     <h3 className="tc2" style={{width:"20%", textAlign: "center"}}>{downloads}</h3>
-                    <h4 className="tc2 bc3" style={{width:"fit-content", height: "fit-content"}} onClick={() => window.open("/project/" + projectid + "/" + fileid)}>+</h4>
+                    <h4 className="tc2 bc3" style={{width:"fit-content", height: "fit-content"}} onClick={() => navigator("/project/" + projectid + "/" + fileid)}>+</h4>
                     
             </div>
             <hr className="hr20"/>

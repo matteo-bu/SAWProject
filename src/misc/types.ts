@@ -26,6 +26,7 @@ export interface Server {
     name: string;
     summary: string;
     tags: string[];
+    versions: string[];
 }
 
 export interface ProjectServerExtra {

@@ -14,6 +14,7 @@ import type { File } from "../misc/types";
 export function FileEdit(){
 
     const { id, fileid } = useParams();
+    const [status, setStatus] = useState("");
 
     const [loaders, setLoaders] = useState<string[]>([]);
     const [versions, setVersions] = useState<string[]>([]);
@@ -31,6 +32,7 @@ export function FileEdit(){
         const { Files } = info;
         const fs = Files();
         const f = fs.find(x => x.id == fileid);
+        if (!f) setStatus("nf");
         setLoaders(f!.platforms);
         setVersions(f!.versions);
         title.current!.value = f!.title;
@@ -142,7 +144,13 @@ export function FileEdit(){
         }
     }
 
-    return (
+    return ( status == "nf" ? 
+        <>  
+            <div className="tc1" style={{textAlign: "center"}}>
+            <h1>File Not Found</h1>
+            <h1>Remember To Save A File Before Editing</h1>
+            </div>
+        </> :
         <>
             <div className="container">
                 <Top/>

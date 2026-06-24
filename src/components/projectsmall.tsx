@@ -4,7 +4,6 @@ import "./projectsmall.css";
 export function ProjectSmall({type, projectid, name, author, downloads, summary, platforms}:{type: string, projectid: string, name: string, author?: string, downloads?: number, summary: string, platforms: string[]}){
 
     const navigator = useNavigate();
-    if (type != "project" && type != "server") type = "project";
 
     return (
         <>
