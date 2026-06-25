@@ -69,9 +69,9 @@ export function FileView(){
                 <div className="horizontal">
                     <div style={{width: "50%"}}>
                         <h3 className="tc1" style={{marginBottom: "10px"}}>Changelog</h3>
-                        <h4 className="tc2 bc2" style={{overflowWrap: "break-word", cursor: "auto", width: "fit-content"}}>{file?.changelog || "No Changelog"}</h4>
+                        <h4 className="tc2 bc2 wfc" style={{overflowWrap: "break-word", cursor: "auto"}}>{file?.changelog || "No Changelog"}</h4>
                     </div>
-                    <h4 className="tc1 bc2 bc3h" style={{width: "fit-content", height:"fit-content", marginLeft: "20px"}} onClick={() => {handleDownload(); window.open(file?.link)}}>Download</h4>
+                    <h4 className="tc1 bc2 bc3h wfc" style={{height:"fit-content", marginLeft: "20px"}} onClick={() => {handleDownload(); window.open(file?.link)}}>Download</h4>
                 </div>
             </div>
         </>

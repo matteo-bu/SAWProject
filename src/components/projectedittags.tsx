@@ -7,11 +7,12 @@ import { ModPluginDPCategories } from "../lists/common";
 import { ResourcepackCategories, ResourcepackFeatures, ResourcepackResolutions } from "../lists/resourcepacks";
 import { doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
+import { FileColumn } from "./filecolumn";
 
 export function ProjectEditTags(){
 
     const { id } = useParams();
-    const [tags, setTags] = useState<String[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
     const navigator = useNavigate();
 
     async function getInfo(){
@@ -30,7 +31,7 @@ export function ProjectEditTags(){
         getInfo();
     }, [id]);
 
-    function addRemoveTag(tag: String){
+    function addRemoveTag(tag: string){
         if (tags?.includes(tag)) setTags(tags.filter(old => old !== tag))
         else setTags(v => [...v, tag])
     }
@@ -66,40 +67,12 @@ export function ProjectEditTags(){
                 </div>
 
                 <div className="horizontal begin">
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Selected Tags List</h3>
-                        {tags? tags.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        )): null}
-                    </div>
 
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Mod Categories</h3>
-                        {ModPluginDPCategories.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Resourcepack Categories</h3>
-                        {ResourcepackCategories.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Resourcepack Features</h3>
-                        {ResourcepackFeatures.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Resourcepack Resolution</h3>
-                        {ResourcepackResolutions.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
+                    <FileColumn title={"Selected Tags List"} items={tags} fun={addRemoveTag}/>
+                    <FileColumn title={"Mod Categories"} items={ModPluginDPCategories} fun={addRemoveTag}/>
+                    <FileColumn title={"Resourcepack Categories"} items={ResourcepackCategories} fun={addRemoveTag}/>
+                    <FileColumn title={"Resourcepack Features"} items={ResourcepackFeatures} fun={addRemoveTag}/>
+                    <FileColumn title={"Resourcepack Resolution"} items={ResourcepackResolutions} fun={addRemoveTag}/>
 
                 </div>
                 

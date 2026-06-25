@@ -190,14 +190,14 @@ export function Profile(){
                       <input type="text" className="emailpassword" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                       <input type="password" className="emailpassword" placeholder="Password (6-30 characters)" maxLength={30} value={password} onChange={(e) => setPassword(e.target.value)}/>
                       <h2 className="tc2 tt bc2 bc3h" onClick={login}>Sign In</h2>
-                      <h2 className="tc2 tt bc2 bc3h" onClick={register} style={{ marginTop: "10px" }}>Register</h2>
+                      <h2 className="tc2 tt bc2 bc3h pmt10" onClick={register}>Register</h2>
                     </div> 
                     :
                     <> 
                       <div className="begin tc1" style={{ marginTop: "20px" }}>
                         <div className="horizontal">
                           <h3 className="tt bc2 bc3h" onClick={() => {setIsDialogOpen(true); setDialogType('project')}}>New Project</h3>
-                          <h3 className="tt bc2 bc3h" onClick={() => {setIsDialogOpen(true); setDialogType('server')}} style={{ marginLeft: "10px" }}>New Server</h3>
+                          <h3 className="tt bc2 bc3h pml10" onClick={() => {setIsDialogOpen(true); setDialogType('server')}}>New Server</h3>
                         </div>
                         <h3 className="tt bc2 bc3h" onClick={logout}>Sign Out</h3>
                       </div>
@@ -206,7 +206,7 @@ export function Profile(){
                       <div className="begin tc1">
                         <div className="horizontal">
                           <input type="text" className="newname" placeholder="New Name (20 characters max)" maxLength={20} ref={newname}/>
-                          <h3 className="tt bc2 bc3h" style={{ marginLeft: "10px" }} onClick={saveName}>Save New Name</h3>
+                          <h3 className="tt bc2 bc3h pml10" onClick={saveName}>Save New Name</h3>
                         </div>
                         <div className="horizontal">
                           <h3 className="tt bc2 bc3h">Current Name: {name}</h3>

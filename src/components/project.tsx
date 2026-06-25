@@ -138,9 +138,9 @@ export function Project(){
                     {   versions.length > 0 ?
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">Versions</h3>
-                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        <div className="horizontal fww">
                         {versions.map((v, index)=> (
-                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{v}</h4>
+                            <h4 key={index} className="tc2 bc3 wfc pml10 pmt10" style={{cursor: "auto"}}>{v}</h4>
                         ))}
                         </div>
                     </div>: null}
@@ -148,9 +148,9 @@ export function Project(){
                     {   platforms.length > 0 ? 
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">Platforms</h3>
-                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        <div className="horizontal fww">
                         {platforms.map((p, index)=> (
-                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{p}</h4>
+                            <h4 key={index} className="tc2 bc3 wfc pml10 pmt10" style={{cursor: "auto"}}>{p}</h4>
                         ))}
                         </div>
                     </div>: null}
@@ -168,9 +168,9 @@ export function Project(){
                     {   project?.tags.length || 0 > 0 ?
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1">Tags</h3>
-                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        <div className="horizontal fww">
                         {project?.tags.map((tag, index)=> (
-                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{tag}</h4>
+                            <h4 key={index} className="tc2 bc3 pml10 pmt10 wfc" style={{cursor: "auto"}}>{tag}</h4>
                         ))}
                         </div>
                     </div> : null}

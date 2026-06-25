@@ -23,12 +23,10 @@ export function Filter({ type, name, bar, list }: { type: string, name: string, 
             : <p></p>}
             
             <div className="">
-                {filter === '' ? list.map((version) => {
-                        return <h4 className="bc3h tc2" key={version} onClick={()=>handleClick(type, version)}>{version}</h4>
-                    }) : list.filter((version) => version.toLowerCase().includes(filter.toLowerCase())).map((version) => {
+                {
+                    list.filter((version) => version.toLowerCase().includes(filter.toLowerCase())).map((version) => {
                         return <h4 className="bc3h tc2" key={version} onClick={()=>handleClick(type, version)}>{version}</h4>
                     })
-                
                 }
             </div>
             </>):null}

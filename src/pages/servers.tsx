@@ -74,19 +74,19 @@ export function ServersPage(){
                     <input type="text" className="search" placeholder="Search..." onKeyUp={(e)=>setSearch(e.currentTarget.value)}/>
                     {
                         versions.length > 0 ? 
-                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        <div className="horizontal fww">
                         <h4 className="tc1 tt pmt10 pml10" onClick={()=>setVersions([])}>Versions</h4>
                         {versions.map((v, i)=>(
-                            <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("v",v)}>{v}</p>
+                            <p key={i} className="tt bc2 bc3h pmt10 pml10 wfc" onClick={()=>handleClick("v",v)}>{v}</p>
                         ))}
                         </div> : null
                     }
                     {
                         categorys.length > 0 ? 
-                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        <div className="horizontal fww">
                         <h4 className="tc1 tt pmt10 pml10" onClick={()=>setCategorys([])}>Misc</h4>
                         {categorys.map((v, i)=>(
-                            <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("c",v)}>{v}</p>
+                            <p key={i} className="tt bc2 bc3h pmt10 pml10 wfc" onClick={()=>handleClick("c",v)}>{v}</p>
                         ))}
                         </div> : null
                     }

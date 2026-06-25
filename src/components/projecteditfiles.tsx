@@ -92,7 +92,7 @@ export function ProjectEditFiles(){
                 </div>
                 {files.map((f, index)=>(
                     <div>
-                        <div className="horizontal" style={{width:"fit-content", marginBottom:"10px"}}>
+                        <div className="horizontal wfc" style={{marginBottom:"10px"}}>
                             <h4 className="tc1 bc2" style={{marginRight:"10px"}} onClick={() => navigator("/project/"+id+"/edit/file/"+f.id)}>Edit</h4>
                             <h4 className="tc1 bc2" onClick={()=>deleteFile(f.id)}>Delete</h4>
                         </div>

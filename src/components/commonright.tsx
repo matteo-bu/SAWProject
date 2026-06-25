@@ -36,36 +36,36 @@ export function CommonRight(){
                 <Sort/>
                 {
                     versions.length > 0 ? 
-                    <div className="horizontal" style={{flexWrap: "wrap"}}>
+                    <div className="horizontal fww">
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setVersions([])}>Versions</h4>
                     {versions.map((v, i)=>(
-                        <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("v",v)}>{v}</p>
+                        <p key={i} className="tt bc2 bc3h pmt10 pml10 wtc" onClick={()=>handleClick("v",v)}>{v}</p>
                     ))}
                     </div> : null
                 }
                 {
                     loaders.length > 0 ? 
-                    <div className="horizontal" style={{flexWrap: "wrap"}}>
+                    <div className="horizontal fww">
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setLoaders([])}>Loaders</h4>
                     {loaders.map((v, i)=>(
-                        <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("l",v)}>{v}</p>
+                        <p key={i} className="tt bc2 bc3h pmt10 pml10 wtc" onClick={()=>handleClick("l",v)}>{v}</p>
                     ))}
                     </div> : null
                 }
                 {
                     categorys.length > 0 ? 
-                    <div className="horizontal" style={{flexWrap: "wrap"}}>
+                    <div className="horizontal fww">
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setCategorys([])}>Misc</h4>
                     {categorys.map((v, i)=>(
-                        <p key={i} className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("c",v)}>{v}</p>
+                        <p key={i} className="tt bc2 bc3h pmt10 pml10 wtc" onClick={()=>handleClick("c",v)}>{v}</p>
                     ))}
                     </div> : null
                 }
                 {
                     license ? 
-                    <div className="horizontal" style={{flexWrap: "wrap"}}>
+                    <div className="horizontal fww">
                     <h4 className="tc1 tt pmt10 pml10" onClick={()=>setLicense("")}>License</h4>
-                    <p className="tt bc2 bc3h pmt10 pml10" style={{width:"fit-content"}} onClick={()=>handleClick("x","")}>Open Source</p>
+                    <p className="tt bc2 bc3h pmt10 pml10 wtc" onClick={()=>handleClick("x","")}>Open Source</p>
                     </div> : null
                 }
             </div>

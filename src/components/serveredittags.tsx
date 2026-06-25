@@ -6,12 +6,13 @@ import { db } from "../firebase/config";
 import { getServerInfo } from "../functions/server";
 import { ServerCommunities, ServerFeatures, ServerGameplays, ServerLanguages, ServerMetas, ServerRegions, ServerTypes } from "../lists/servers";
 import { Versions } from "../lists/common";
+import { FileColumn } from "./filecolumn";
 
 export function ServerEditTags(){
 
     const { id } = useParams();
-    const [tags, setTags] = useState<String[]>([]);
-    const [versions, setVersions] = useState<String[]>([]);
+    const [tags, setTags] = useState<string[]>([]);
+    const [versions, setVersions] = useState<string[]>([]);
     const navigator = useNavigate();
 
     async function getInfo(){
@@ -31,12 +32,12 @@ export function ServerEditTags(){
         getInfo();
     }, [id]);
 
-    function addRemoveTag(tag: String){
+    function addRemoveTag(tag: string){
         if (tags?.includes(tag)) setTags(tags.filter(old => old !== tag))
         else setTags(v => [...v, tag])
     }
 
-    function addRemoveVersion(v: String){
+    function addRemoveVersion(v: string){
         if (versions?.includes(v)) setVersions(versions.filter(old => old !== v))
         else setVersions(old => [...old, v])
     }
@@ -85,78 +86,22 @@ export function ServerEditTags(){
                 </div>
 
                 <div className="horizontal begin">
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Selected Tags List</h3>
-                        {tags? tags.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        )): null}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Types</h3>
-                        {ServerTypes.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Features</h3>
-                        {ServerFeatures.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Gameplay</h3>
-                        {ServerGameplays.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Meta</h3>
-                        {ServerMetas.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Community</h3>
-                        {ServerCommunities.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Region</h3>
-                        {ServerRegions.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Language</h3>
-                        {ServerLanguages.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveTag(item)}>{item}</p>
-                        ))}
-                    </div>
+                    
+                    <FileColumn title={"Selected Tags List"} items={tags} fun={addRemoveTag}/>
+                    <FileColumn title={"Types"} items={ServerTypes} fun={addRemoveTag}/>
+                    <FileColumn title={"Features"} items={ServerFeatures} fun={addRemoveTag}/>
+                    <FileColumn title={"Gameplay"} items={ServerGameplays} fun={addRemoveTag}/>
+                    <FileColumn title={"Meta"} items={ServerMetas} fun={addRemoveTag}/>
+                    <FileColumn title={"Community"} items={ServerCommunities} fun={addRemoveTag}/>
+                    <FileColumn title={"Region"} items={ServerRegions} fun={addRemoveTag}/>
+                    <FileColumn title={"Language"} items={ServerLanguages} fun={addRemoveTag}/>
 
                 </div>
 
                 <div className="horizontal begin pmt10" style={{marginRight: "10px"}}>
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Selected Versions</h3>
-                        {versions? versions.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveVersion(item)}>{item}</p>
-                        )): null}
-                    </div>
 
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Pack</h3>
-                        {Versions.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveVersion(item)}>{item}</p>
-                        ))}
-                    </div>
+                    <FileColumn title={"Selected Versions"} items={versions} fun={addRemoveVersion}/>
+                    <FileColumn title={"Versions"} items={Versions} fun={addRemoveVersion}/>
 
                     <h3 className="tt tc1 bc2 bc3h pml10" style={{height: "fit-content"}} onClick={saveVersions}>Save Versions</h3>
 

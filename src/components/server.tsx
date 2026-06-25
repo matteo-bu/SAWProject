@@ -84,7 +84,7 @@ export function Server(){
                     {   ip ? 
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1 projecttitle">Server IP</h3>
-                        <h4 className="tc2 bc3" style={{width: "fit-content", cursor: "auto", marginTop: "10px"}}>{ip}</h4>
+                        <h4 className="tc2 bc3 wfc pmt10" style={{cursor: "auto"}}>{ip}</h4>
                     </div>: null}
                     
                     {   server?.versions.length || 0 > 0 ?
@@ -92,7 +92,7 @@ export function Server(){
                         <h3 className="tc1 projecttitle">Versions</h3>
                         <div className="horizontal" style={{flexWrap: "wrap"}}>
                         {server?.versions.map((v, index)=> (
-                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{v}</h4>
+                            <h4 key={index} className="tc2 bc3 pml10 wfc pmt10" style={{cursor: "auto"}}>{v}</h4>
                         ))}
                         </div>
                     </div>: null}
@@ -110,9 +110,9 @@ export function Server(){
                     {   server?.tags.length || 0 > 0 ?
                     <div className="projectdesc bc2 tc2">
                         <h3 className="tc1">Tags</h3>
-                        <div className="horizontal" style={{flexWrap: "wrap"}}>
+                        <div className="horizontal fww">
                         {server?.tags.map((tag, index)=> (
-                            <h4 key={index} className="tc2 bc3" style={{marginLeft: "10px", width: "fit-content", cursor: "auto", marginTop: "10px"}}>{tag}</h4>
+                            <h4 key={index} className="tc2 bc3 pml10 pmt10 wfc" style={{cursor: "auto"}}>{tag}</h4>
                         ))}
                         </div>
                     </div> : null}

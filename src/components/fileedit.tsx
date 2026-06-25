@@ -10,6 +10,7 @@ import { PackLoaders, Versions } from "../lists/common";
 import { doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import type { File } from "../misc/types";
+import { FileColumn } from "./filecolumn";
 
 export function FileEdit(){
 
@@ -179,59 +180,21 @@ export function FileEdit(){
                 </div>
 
                 <div className="horizontal begin" style={{marginRight: "10px"}}>
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Selected Platforms List</h3>
-                        {loaders? loaders.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveLoader(item)}>{item}</p>
-                        )): null}
-                    </div>
 
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Pack</h3>
-                        {PackLoaders.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveLoader(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Mod</h3>
-                        {ModLoaders.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveLoader(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Plugin</h3>
-                        {PluginLoaders.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveLoader(item)}>{item}</p>
-                        ))}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Shaders</h3>
-                        {ShadersLoaders.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveLoader(item)}>{item}</p>
-                        ))}
-                    </div>
+                    <FileColumn title={"Selected Platforms List"} items={loaders} fun={addRemoveLoader}/>
+                    <FileColumn title={"Pack"} items={PackLoaders} fun={addRemoveLoader}/>
+                    <FileColumn title={"Mod"} items={ModLoaders} fun={addRemoveLoader}/>
+                    <FileColumn title={"Plugin"} items={PluginLoaders} fun={addRemoveLoader}/>
+                    <FileColumn title={"Shaders"} items={ShadersLoaders} fun={addRemoveLoader}/>
 
                     <h3 className="tt tc1 bc2 bc3h pml10" style={{height: "fit-content"}} onClick={savePlatforms}>Save Platforms</h3>
 
                 </div>
 
                 <div className="horizontal begin pmt10" style={{marginRight: "10px"}}>
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Selected Versions</h3>
-                        {versions? versions.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveVersion(item)}>{item}</p>
-                        )): null}
-                    </div>
-
-                    <div className="vertical">
-                        <h3 className="tc1 pmt10">Pack</h3>
-                        {Versions.map((item) => (
-                            <p className="tt bc2 bc3h pmt10" onClick={() => addRemoveVersion(item)}>{item}</p>
-                        ))}
-                    </div>
+   
+                    <FileColumn title={"Selected Versions"} items={versions} fun={addRemoveVersion}/>
+                    <FileColumn title={"Versions"} items={Versions} fun={addRemoveVersion}/>
 
                     <h3 className="tt tc1 bc2 bc3h pml10" style={{height: "fit-content"}} onClick={saveVersions}>Save Versions</h3>
 

@@ -53,3 +53,11 @@
     margin-top: 15px;
     border-radius: 10px;
 }
+
+.wfc{
+    width: fit-content;
+}
+
+.fww{
+    flex-wrap: wrap;
+}
