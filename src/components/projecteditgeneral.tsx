@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router";
 import { Top } from "./top";
 import "./projecteditgeneral.css";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Licenses } from "../lists/common";
-import { getProjectInfo } from "../functions/project";
+import { getProjectInfo, ProjectContext } from "../functions/project";
 import { deleteDoc, doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import { UserError } from "./usererror";
@@ -15,6 +15,10 @@ export function ProjectEditGeneral(){
     const { id } = useParams();
     const x = checkUser("project",id || "");
     const navigator = useNavigate();
+
+    const projectC = useContext(ProjectContext);
+    if (!projectC) return;
+    const { projects, setProjects } = projectC;
 
     const name = useRef<HTMLTextAreaElement>(null);
     const summary = useRef<HTMLTextAreaElement>(null);
@@ -83,6 +87,7 @@ export function ProjectEditGeneral(){
     async function deleteProject(){
         if(!id) return;
         await deleteDoc(doc(db, "projects", id));
+        setProjects(projects.filter((p)=>p.id != id));
         navigator("/profile");
     }
 

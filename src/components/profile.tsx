@@ -13,6 +13,7 @@ import { ProjectSmall } from "./projectsmall";
 import { getData, UserContext } from "../functions/user";
 import { ProjectContext } from "../functions/project";
 import { ServerContext } from "../functions/server";
+import type { Project, Server } from "../misc/types";
 
 export function Profile(){
 
@@ -127,7 +128,7 @@ export function Profile(){
           return;
         }
 
-        const { getProgressionNumber } = getData(user.uid);
+        const { getName, getProgressionNumber } = getData(user.uid);
         const number = await getProgressionNumber();
 
         const Ref = doc(db, dialogType+"s", user.uid + number);
@@ -149,22 +150,42 @@ export function Profile(){
             await setDoc(Ref, {
               downloads: 0,
               files: [],
-              license: "All Rights Reserved",
+              license: "All Rights Reserved"
             },
             { merge: true });
+            const n: Project = {
+              id: user.uid + number,
+              userid: user.uid,
+              username: await getName() || "",
+              name: pname,
+              summary: psummary,
+              tags: [],
+              downloads: 0,
+              files: [],
+              license: "All Rights Reserved"
+            };
+            setProjects((old)=>[...old,n]);
           } else {
             await setDoc(Ref, {
               ip: "No IP Yet",
               versions: []
             },
             { merge: true });
+            const n: Server = {
+              id: user.uid + number,
+              userid: user.uid,
+              name: pname,
+              summary: psummary,
+              tags: [],
+              versions: []
+            };
+            setServers((p) => [...p, n]);
           }
         } catch (err) {
           console.log(err);
         }
 
         setIsDialogOpen(false);
-        window.location.reload();
 
       }
 

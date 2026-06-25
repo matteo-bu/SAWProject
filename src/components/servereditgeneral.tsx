@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router";
 import { Top } from "./top";
-import { useEffect, useRef} from "react";
+import { useContext, useEffect, useRef} from "react";
 import { deleteDoc, doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
-import { getServerInfo } from "../functions/server";
+import { getServerInfo, ServerContext } from "../functions/server";
 import { UserError } from "./usererror";
 import { checkUser } from "../functions/checkuser";
 import { UserLoading } from "./userloading";
@@ -13,6 +13,10 @@ export function ServerEditGeneral(){
     const { id } = useParams();
     const x = checkUser("server",id || "");
     const navigator = useNavigate();
+
+    const projectC = useContext(ServerContext);
+    if (!projectC) return;
+    const { servers, setServers } = projectC;
 
     const ip = useRef<HTMLTextAreaElement>(null);
     const name = useRef<HTMLTextAreaElement>(null);
@@ -65,6 +69,7 @@ export function ServerEditGeneral(){
     async function deleteServer(){
         if(!id) return;
         await deleteDoc(doc(db, "servers", id));
+        setServers(servers.filter((p)=>p.id != id));
         navigator("/profile");
     }
 
