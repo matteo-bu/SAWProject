@@ -35,11 +35,11 @@ export function Profile(){
 
       const projectC = useContext(ProjectContext);
       if (!projectC) return;
-      const { projects } = projectC;
+      const { projects, setProjects } = projectC;
 
       const serverC = useContext(ServerContext);
       if (!serverC) return;
-      const { servers } = serverC;
+      const { servers, setServers } = serverC;
     
       const loginWithGoogle = async () => {
         try {
@@ -145,33 +145,22 @@ export function Profile(){
             discord: "",
             donation: ""
           });
-        } catch (err) {
-          console.log(err);
-        }
-
-        if (dialogType === "project") {
-          try {
+          if (dialogType === "project"){
             await setDoc(Ref, {
               downloads: 0,
               files: [],
               license: "All Rights Reserved",
             },
             { merge: true });
-          } catch (err) {
-            console.log(err);
-          }
-        }
-
-        if (dialogType === "server") {
-          try {
+          } else {
             await setDoc(Ref, {
               ip: "No IP Yet",
               versions: []
             },
             { merge: true });
-          } catch (err) {
-            console.log(err);
           }
+        } catch (err) {
+          console.log(err);
         }
 
         setIsDialogOpen(false);
