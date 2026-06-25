@@ -4,10 +4,14 @@ import { useEffect, useRef} from "react";
 import { deleteDoc, doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import { getServerInfo } from "../functions/server";
+import { UserError } from "./usererror";
+import { checkUser } from "../functions/checkuser";
+import { UserLoading } from "./userloading";
 
 export function ServerEditGeneral(){
 
     const { id } = useParams();
+    const x = checkUser("server",id || "");
     const navigator = useNavigate();
 
     const ip = useRef<HTMLTextAreaElement>(null);
@@ -42,140 +46,30 @@ export function ServerEditGeneral(){
     useEffect(() => {
         if (!id) return;
         getInfo();
-    }, [id]);
+    }, [id,x]);
 
-    async function saveIp(){
+    async function save(field: string, ref: React.RefObject<HTMLTextAreaElement | null>){
         if (!id) return;
 
         try {
             await setDoc(doc(db, "servers", id), {
-            ip: ip.current!.value
+            [field]: ref.current!.value
             },
             { merge: true });
             
         } catch (err) {
             console.log(err);
-        }
-    }
-
-    async function saveName(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            name: name.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveSummary(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            summary: summary.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveDescription(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            description: description.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveIssueTracker(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            issuetracker: issuetracker.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveSourceCode(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            sourcecode: sourcecode.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveWikiPage(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            wikipage: wikipage.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveDiscord(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            discord: discord.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveDonation(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            donation: donation.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
+        }        
     }
 
     async function deleteServer(){
         if(!id) return;
         await deleteDoc(doc(db, "servers", id));
+        navigator("/profile");
     }
 
     return (
+        x == null ? <UserLoading/> : x ?
         <>
             <div className="container">
                 <Top/>
@@ -185,69 +79,69 @@ export function ServerEditGeneral(){
                         <h4 className="tt tt2 bc3h" onClick={() => navigator("/server/"+id+"/edit/tags")}>Tags And Versions</h4>
                     </div>
                     <div className="selection horizontal bc2 tc1" style={{marginLeft:"30px",backgroundColor:"red"}}>
-                        <h4 className="tt tt2 bc3h" onClick={() => {deleteServer(); navigator("/profile")}}>Delete Server</h4>
+                        <h4 className="tt tt2 bc3h" onClick={() => {deleteServer();}}>Delete Server</h4>
                     </div>
                 </div>
 
                 <div style={{marginTop: "30px"}}>
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Ip</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveIp}>Save New Ip</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("ip",ip)}>Save New Ip</h3>
                     </div>
                     <textarea ref={ip} className="bc3 tc1 projecteditarea" maxLength={50} placeholder="Write New Ip"/>
                     
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Name</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveName}>Save New Name</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("name",name)}>Save New Name</h3>
                     </div>
                     <textarea ref={name} className="bc3 tc1 projecteditarea" maxLength={50} placeholder="Write New Name (50 characters max)"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Summary</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveSummary}>Save New Summary</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("summary",summary)}>Save New Summary</h3>
                     </div>
                     <textarea ref={summary} className="bc3 tc1 projecteditarea" maxLength={150} placeholder="Write New Summary (150 characters max)"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Description</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveDescription}>Save New Description</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("description",description)}>Save New Description</h3>
                     </div>
                     <textarea ref={description} className="bc3 tc1 projecteditarea" placeholder="Write New Description"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10">IssueTracker Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveIssueTracker}>Save New IssueTracker Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("issuetracker",issuetracker)}>Save New IssueTracker Link</h3>
                     </div>
                     <textarea ref={issuetracker} className="bc3 tc1 projecteditarea" placeholder="Write New IssueTracker Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10">Sourcecode Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveSourceCode}>Save New Sourcecode Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("sourcecode",sourcecode)}>Save New Sourcecode Link</h3>
                     </div>
                     <textarea ref={sourcecode} className="bc3 tc1 projecteditarea" placeholder="Write New Sourcecode Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10">Wikipage Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveWikiPage}>Save New Wikipage Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("wikipage",wikipage)}>Save New Wikipage Link</h3>
                     </div>
                     <textarea ref={wikipage} className="bc3 tc1 projecteditarea" placeholder="Write New Wikipage Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Discord Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveDiscord}>Save New Discord Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("discord",discord)}>Save New Discord Link</h3>
                     </div>
                     <textarea ref={discord} className="bc3 tc1 projecteditarea" placeholder="Write New Discord Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Donation Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveDonation}>Save New Donation Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("donation",donation)}>Save New Donation Link</h3>
                     </div>
                     <textarea ref={donation} className="bc3 tc1 projecteditarea" placeholder="Write New Donation Link"/>
 
                 </div>
                 
             </div>
-        </>
+        </> : <UserError/>
     )
 
 }

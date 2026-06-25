@@ -8,10 +8,14 @@ import { ResourcepackCategories, ResourcepackFeatures, ResourcepackResolutions }
 import { doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
 import { FileColumn } from "./filecolumn";
+import { UserError } from "./usererror";
+import { checkUser } from "../functions/checkuser";
+import { UserLoading } from "./userloading";
 
 export function ProjectEditTags(){
 
     const { id } = useParams();
+    const x = checkUser("project",id || "");
     const [tags, setTags] = useState<string[]>([]);
     const navigator = useNavigate();
 
@@ -51,6 +55,7 @@ export function ProjectEditTags(){
     }
 
     return (
+        x == null ? <UserLoading/> : x ? 
         <>
             <div className="container">
                 <Top/>
@@ -78,7 +83,7 @@ export function ProjectEditTags(){
                 
                 
             </div>
-        </>
+        </> : <UserError/>
     )
 
 }

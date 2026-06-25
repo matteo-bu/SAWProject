@@ -7,10 +7,14 @@ import { getServerInfo } from "../functions/server";
 import { ServerCommunities, ServerFeatures, ServerGameplays, ServerLanguages, ServerMetas, ServerRegions, ServerTypes } from "../lists/servers";
 import { Versions } from "../lists/common";
 import { FileColumn } from "./filecolumn";
+import { UserError } from "./usererror";
+import { checkUser } from "../functions/checkuser";
+import { UserLoading } from "./userloading";
 
 export function ServerEditTags(){
 
     const { id } = useParams();
+    const x = checkUser("server",id || "");
     const [tags, setTags] = useState<string[]>([]);
     const [versions, setVersions] = useState<string[]>([]);
     const navigator = useNavigate();
@@ -42,26 +46,12 @@ export function ServerEditTags(){
         else setVersions(old => [...old, v])
     }
 
-    async function saveTags(){
+    async function save(field: string, items: string[]){
         if (!id) return;
 
         try {
             await setDoc(doc(db, "servers", id), {
-            tags: tags
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveVersions(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "servers", id), {
-            versions: versions
+            [field]: items
             },
             { merge: true });
             
@@ -71,6 +61,7 @@ export function ServerEditTags(){
     }
 
     return (
+       x == null ? <UserLoading/> : x ?
         <>
             <div className="container">
                 <Top/>
@@ -81,7 +72,7 @@ export function ServerEditTags(){
                     </div>
 
                     <div className="selection horizontal bc2 tc1" style={{marginLeft: "15px"}}>
-                        <h4 className="tt tt2 bc3h" onClick={saveTags}>Save Selected Tags</h4>
+                        <h4 className="tt tt2 bc3h" onClick={()=>save("tags",tags)}>Save Selected Tags</h4>
                     </div>
                 </div>
 
@@ -103,13 +94,13 @@ export function ServerEditTags(){
                     <FileColumn title={"Selected Versions"} items={versions} fun={addRemoveVersion}/>
                     <FileColumn title={"Versions"} items={Versions} fun={addRemoveVersion}/>
 
-                    <h3 className="tt tc1 bc2 bc3h pml10" style={{height: "fit-content"}} onClick={saveVersions}>Save Versions</h3>
+                    <h3 className="tt tc1 bc2 bc3h pml10" style={{height: "fit-content"}} onClick={()=>save("versions",versions)}>Save Versions</h3>
 
                 </div>
                 
                 
             </div>
-        </>
+        </> : <UserError/>
     )
 
 }

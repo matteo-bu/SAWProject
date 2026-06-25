@@ -175,6 +175,7 @@ export function Profile(){
         }
 
         setIsDialogOpen(false);
+        window.location.reload();
 
       }
 

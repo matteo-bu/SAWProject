@@ -6,10 +6,14 @@ import { Licenses } from "../lists/common";
 import { getProjectInfo } from "../functions/project";
 import { deleteDoc, doc, setDoc } from "@firebase/firestore";
 import { db } from "../firebase/config";
+import { UserError } from "./usererror";
+import { checkUser } from "../functions/checkuser";
+import { UserLoading } from "./userloading";
 
 export function ProjectEditGeneral(){
 
     const { id } = useParams();
+    const x = checkUser("project",id || "");
     const navigator = useNavigate();
 
     const name = useRef<HTMLTextAreaElement>(null);
@@ -46,118 +50,20 @@ export function ProjectEditGeneral(){
     useEffect(() => {
         if (!id) return;
         getInfo();
-    }, [id]);
+    }, [id,x]);
 
-    async function saveName(){
+    async function save(field: string, ref: React.RefObject<HTMLTextAreaElement | null>){
         if (!id) return;
 
         try {
             await setDoc(doc(db, "projects", id), {
-            name: name.current!.value
+            [field]: ref.current!.value
             },
             { merge: true });
             
         } catch (err) {
             console.log(err);
-        }
-    }
-
-    async function saveSummary(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            summary: summary.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveDescription(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            description: description.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveIssueTracker(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            issuetracker: issuetracker.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveSourceCode(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            sourcecode: sourcecode.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveWikiPage(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            wikipage: wikipage.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveDiscord(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            discord: discord.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function saveDonation(){
-        if (!id) return;
-
-        try {
-            await setDoc(doc(db, "projects", id), {
-            donation: donation.current!.value
-            },
-            { merge: true });
-            
-        } catch (err) {
-            console.log(err);
-        }
+        }        
     }
 
     async function saveLicense(){
@@ -177,9 +83,11 @@ export function ProjectEditGeneral(){
     async function deleteProject(){
         if(!id) return;
         await deleteDoc(doc(db, "projects", id));
+        navigator("/profile");
     }
 
     return (
+        x == null ? <UserLoading/> : x ? 
         <>
             <div className="container">
                 <Top/>
@@ -190,56 +98,56 @@ export function ProjectEditGeneral(){
                         <h4 className="tt tt2 bc3h" onClick={() => navigator("/project/"+id+"/edit/files")}>Files</h4>
                     </div>
                     <div className="selection horizontal bc2 tc1" style={{marginLeft:"30px",backgroundColor:"red"}}>
-                        <h4 className="tt tt2 bc3h" onClick={() => {deleteProject(); navigator("/profile")}}>Delete Project</h4>
+                        <h4 className="tt tt2 bc3h" onClick={() => {deleteProject();}}>Delete Project</h4>
                     </div>
                 </div>
 
                 <div style={{marginTop: "30px"}}>
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Name</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveName}>Save New Name</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("name",name)}>Save New Name</h3>
                     </div>
                     <textarea ref={name} className="bc3 tc1 projecteditarea" maxLength={50} placeholder="Write New Name (50 characters max)"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Summary</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveSummary}>Save New Summary</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("summary",summary)}>Save New Summary</h3>
                     </div>
                     <textarea ref={summary} className="bc3 tc1 projecteditarea" maxLength={150} placeholder="Write New Summary (150 characters max)"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Description</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveDescription}>Save New Description</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("description",description)}>Save New Description</h3>
                     </div>
                     <textarea ref={description} className="bc3 tc1 projecteditarea" placeholder="Write New Description"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10">IssueTracker Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveIssueTracker}>Save New IssueTracker Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("issuetracker",issuetracker)}>Save New IssueTracker Link</h3>
                     </div>
                     <textarea ref={issuetracker} className="bc3 tc1 projecteditarea" placeholder="Write New IssueTracker Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10">Sourcecode Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveSourceCode}>Save New Sourcecode Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("sourcecode",sourcecode)}>Save New Sourcecode Link</h3>
                     </div>
                     <textarea ref={sourcecode} className="bc3 tc1 projecteditarea" placeholder="Write New Sourcecode Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10">Wikipage Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveWikiPage}>Save New Wikipage Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("wikipage",wikipage)}>Save New Wikipage Link</h3>
                     </div>
                     <textarea ref={wikipage} className="bc3 tc1 projecteditarea" placeholder="Write New Wikipage Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Discord Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveDiscord}>Save New Discord Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("discord",discord)}>Save New Discord Link</h3>
                     </div>
                     <textarea ref={discord} className="bc3 tc1 projecteditarea" placeholder="Write New Discord Link"/>
 
                     <div className="horizontal">
                         <h3 className="tc1 pmt10" >Donation Link</h3>
-                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={saveDonation}>Save New Donation Link</h3>
+                        <h3 className="tt tc1 bc2 bc3h pml10" onClick={()=>save("donation",donation)}>Save New Donation Link</h3>
                     </div>
                     <textarea ref={donation} className="bc3 tc1 projecteditarea" placeholder="Write New Donation Link"/>
 
@@ -263,7 +171,7 @@ export function ProjectEditGeneral(){
                 </div>
                 
             </div>
-        </>
+        </> : <UserError/>
     )
 
 }

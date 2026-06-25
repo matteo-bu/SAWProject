@@ -14,7 +14,11 @@ export function Top(){
                     <img src={logo} alt="ProjectLogo" width="32px" height="32px" style={{cursor: 'pointer'}}/>
                     <h3 className="tt">Project</h3>
                 </div>
-                <h3 className="tt bc2 bc3h" onClick={() => window.location.reload()}>Refresh Page</h3>
+                <div className="horizontal">
+                    <h3 className="tt bc2 bc3h" onClick={() => window.history.back()}>←</h3>
+                    <h3 className="tt bc2 bc3h pml10" onClick={() => window.location.reload()}>Refresh Page</h3>
+                    <h3 className="tt bc2 bc3h pml10" onClick={() => window.history.forward()}>→</h3>
+                </div>
                 <Discover />
                 <h3 className="tt bc2 bc3h" onClick={() => navigator("/profile")}>Profile</h3>
             </div>

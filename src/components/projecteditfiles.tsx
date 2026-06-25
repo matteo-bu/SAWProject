@@ -8,6 +8,9 @@ import { db } from "../firebase/config";
 import type { File } from "../misc/types";
 import { getData, UserContext } from "../functions/user";
 import { FileSmall } from "./filesmall";
+import { UserError } from "./usererror";
+import { checkUser } from "../functions/checkuser";
+import { UserLoading } from "./userloading";
 
 export function ProjectEditFiles(){
 
@@ -16,6 +19,7 @@ export function ProjectEditFiles(){
     const {user} = userC;
 
     const { id } = useParams();
+    const x = checkUser("project",id || "");
     const [files, setFiles] = useState<File[]>([]);
     const navigator = useNavigate();
 
@@ -72,6 +76,7 @@ export function ProjectEditFiles(){
     }
 
     return (
+        x == null ? <UserLoading/> : x ? 
         <>
             <div className="container">
                 <Top/>
@@ -101,7 +106,7 @@ export function ProjectEditFiles(){
                 ))}
                 
             </div>
-        </>
+        </> : <UserError/>
     )
 
 }
