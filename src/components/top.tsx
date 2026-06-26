@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-import logo from '../assets/logo.png';
 import { Discover } from './discover';
 import './top.css';
 
@@ -10,9 +9,8 @@ export function Top(){
     return (
         <>
             <div className="top tc1">
-                <div className="horizontal" onClick={() => navigator("/")}>    
-                    <img src={logo} alt="ProjectLogo" width="32px" height="32px" style={{cursor: 'pointer'}}/>
-                    <h3 className="tt">Project</h3>
+                <div className="horizontal" onClick={() => navigator("/")}>
+                    <h3 className="tt">Main Page</h3>
                 </div>
                 <div className="horizontal">
                     <h3 className="tt bc2 bc3h" onClick={() => window.history.back()}>←</h3>
