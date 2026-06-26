@@ -35,7 +35,7 @@ export function Main() {
         <div className="container">
             <Top/>
             <div className="center vertical">
-                {visible?<h1 className="tt tc1 bc2 bc3h" style={{marginBottom:"20px"}} onClick={handleInstall}>Install App</h1>:null}
+                {visible?<h1 className="tt tc1 bc2 bc3h" onClick={handleInstall}>Install App</h1>:null}
                 <h1 className="tc1">Welcome to the Main Page</h1>
                 <p className="tc2" style={{ fontSize: '30px' }}>Start Discovering Mods</p>
                 <button className="mainbutton" onClick={() => navigate("/discover/mods")}>Discover Mods</button>
