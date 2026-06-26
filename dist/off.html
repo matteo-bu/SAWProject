@@ -9,9 +9,8 @@
     </style>
 </head>
 <body>
-    <h1>Dispositivo Offline</h1>
-    <p>La pagina richiesta non è disponibile senza una connessione internet.</p>
-    <button id="retryBtn">Riprova a connetterti</button>
+    <h1>You Are Offline</h1>
+    <button id="retryBtn">Try To Reconnect</button>
 
     <script>
         // 1. Se l'utente preme F5 o clicca il bottone da ONLINE, lo rimanda alla home
@@ -19,19 +18,19 @@
             if (navigator.onLine) {
                 window.location.href = '/';
             } else {
-                alert('Sei ancora offline. Controlla la tua connessione.');
+                alert('You Are Still Offline');
             }
         });
 
         // 2. Rilevamento automatico del ritorno online senza dover fare nulla
-        window.addEventListener('online', () => {
+        /*window.addEventListener('online', () => {
             window.location.href = '/';
         });
 
         // 3. Controllo preventivo: se per qualche motivo ricarica ed è online, esce subito
         if (navigator.onLine) {
             window.location.href = '/';
-        }
+        }*/
     </script>
 </body>
 </html>

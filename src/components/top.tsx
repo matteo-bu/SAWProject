@@ -16,7 +16,7 @@ export function Top(){
                 </div>
                 <div className="horizontal">
                     <h3 className="tt bc2 bc3h" onClick={() => window.history.back()}>←</h3>
-                    <h3 className="tt bc2 bc3h pml10" onClick={() => window.location.reload()}>Refresh Page</h3>
+                    <h3 className="tt bc2 bc3h pml10" onClick={() => window.location.reload()}>Refresh</h3>
                     <h3 className="tt bc2 bc3h pml10" onClick={() => window.history.forward()}>→</h3>
                 </div>
                 <Discover />

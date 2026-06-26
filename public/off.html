@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Offline</title>
+    <style>
+        body { text-align: center; font-family: sans-serif; padding: 50px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>You Are Offline</h1>
+    <button id="retryBtn">Try To Reconnect</button>
+
+    <script>
+        
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            if (navigator.onLine) {
+                window.location.href = '/';
+            } else {
+                alert('You Are Still Offline');
+            }
+        });
+        
+    </script>
+</body>
+</html>
