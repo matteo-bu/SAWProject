@@ -8,9 +8,6 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['logo192.png'],
-      workbox: {
-        navigateFallback: '/offline.html'
-      },
       manifest: {
         name: "SAWProject",
         short_name: "SAWp",

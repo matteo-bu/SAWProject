@@ -13,24 +13,30 @@
     <button id="retryBtn">Try To Reconnect</button>
 
     <script>
-        // 1. Se l'utente preme F5 o clicca il bottone da ONLINE, lo rimanda alla home
-        document.getElementById('retryBtn').addEventListener('click', () => {
-            if (navigator.onLine) {
+        
+        async function checkOnline() {
+            
+            if (!navigator.onLine) return false;
+
+            try {
+                //parametro casuale, solo intestazione, no cache
+                const response = await fetch('/?t=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+        
+        document.getElementById('retryBtn').addEventListener('click', async () => {
+            const online = await checkOnline();
+            
+            if (online) {
                 window.location.href = '/';
             } else {
                 alert('You Are Still Offline');
             }
         });
-
-        // 2. Rilevamento automatico del ritorno online senza dover fare nulla
-        /*window.addEventListener('online', () => {
-            window.location.href = '/';
-        });
-
-        // 3. Controllo preventivo: se per qualche motivo ricarica ed è online, esce subito
-        if (navigator.onLine) {
-            window.location.href = '/';
-        }*/
+        
     </script>
 </body>
 </html>

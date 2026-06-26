@@ -14,8 +14,23 @@
 
     <script>
         
-        document.getElementById('retryBtn').addEventListener('click', () => {
-            if (navigator.onLine) {
+        async function checkOnline() {
+            
+            if (!navigator.onLine) return false;
+
+            try {
+                //parametro casuale, solo intestazione, no cache
+                const response = await fetch('/?t=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+        
+        document.getElementById('retryBtn').addEventListener('click', async () => {
+            const online = await checkOnline();
+            
+            if (online) {
                 window.location.href = '/';
             } else {
                 alert('You Are Still Offline');
