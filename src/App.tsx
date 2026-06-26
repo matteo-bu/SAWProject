@@ -44,22 +44,20 @@ function App() {
     try {
           const projectsCollection = await getDocs(collection(db, "projects"));
           projectsCollection.forEach(async (doc) => {
-            const info = await getProjectInfo(doc.id);
-            if (!info) return;
 
-            const { Id, UserId, Name, Summary, Tags, Downloads, Files, License } = info;
-            const { getName } = getData(UserId());
+            const data = doc.data();
+            const { getName } = getData(data.userid);
             
             const n: Project = {
-              id: Id(),
-              userid: UserId(),
+              id: doc.id,
+              userid: data.userid,
               username: await getName() || "",
-              name: Name(),
-              summary: Summary(),
-              tags: Tags(),
-              downloads: Downloads(),
-              files: Files(),
-              license: License()
+              name: data.name,
+              summary: data.summary,
+              tags: data.tags,
+              downloads: data.downloads,
+              files: data.files,
+              license: data.license
             };
             setProjects(p => [...p, n]);
           });
@@ -72,18 +70,16 @@ function App() {
     try {
           const serversCollection = await getDocs(collection(db, "servers"));
           serversCollection.forEach(async (doc) => {
-            const info = await getServerInfo(doc.id);
-            if (!info) return;
 
-            const { Id, UserId, Name, Summary, Tags, Versions } = info;
+            const data = doc.data();
             
             const n: Server = {
-              id: Id(),
-              userid: UserId(),
-              name: Name(),
-              summary: Summary(),
-              tags: Tags(),
-              versions: Versions()
+              id: doc.id,
+              userid: data.userid,
+              name: data.name,
+              summary: data.summary,
+              tags: data.tags,
+              versions: data.versions
             };
             setServers(p => [...p, n]);
           });
