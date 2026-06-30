@@ -16,18 +16,19 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// 1. VAPID Keys (Generate once and reuse)
-const vapidKeys = webpush.generateVAPIDKeys();
+//const vapidKeys = webpush.generateVAPIDKeys();
+const keyPublic = 'BB6IaVb69g0_qcFGLfqVWgypxAr_u4CMkYdoxv_zjPKlfTf1tDqC-9CtwYUCpplM4ac-2NEbK1jf7RPw9Z2u4tg';
+const keyPrivate = '-V1xmyLtS2U0wrtyZirT7C6MpIfvocOASIF5FmDT114';
 webpush.setVapidDetails(
   'mailto:example@yourdomain.org',
-  vapidKeys.publicKey,
-  vapidKeys.privateKey
+  keyPublic,//vapidKeys.publicKey,
+  keyPrivate//vapidKeys.privateKey
 );
 
-console.log("Public Key for index.html:", vapidKeys.publicKey);
+console.log("Public Key for index.html:", keyPublic);
 
 app.get('/vapidPublicKey', (req, res) => {
-  res.send(vapidKeys.publicKey);
+  res.send(keyPublic);
 });
 
 // 2. In-memory storage for subscribers
@@ -35,6 +36,7 @@ let subscribers = [];
 
 app.post('/subscribe', (req, res) => {
   const subscription = req.body;
+  console.log(subscription);
   
   // Add the new subscription to our list
   subscribers.push(subscription);
@@ -44,7 +46,6 @@ app.post('/subscribe', (req, res) => {
 });
 
 let serverPronto = false;
-
 // Ascolta i cambiamenti sulla collezione "projects" in tempo reale
 db.collection('projects').onSnapshot((snapshot) => {
   // Gestisce l'attivazione iniziale per non notificare i progetti storici già presenti
