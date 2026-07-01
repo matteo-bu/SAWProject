@@ -49,23 +49,23 @@ export function Main() {
             const publicVapidKey = await fetch('http://localhost:3000/vapidPublicKey').then(res => res.text());//'BB6IaVb69g0_qcFGLfqVWgypxAr_u4CMkYdoxv_zjPKlfTf1tDqC-9CtwYUCpplM4ac-2NEbK1jf7RPw9Z2u4tg';
             console.log('Chiave pubblica VAPID ricevuta dal server: ' + publicVapidKey);
 
-            // 3. Usa il Service Worker già pronto invece di registrarne uno nuovo
+            // usa sw già pronto invece di registrarne uno nuovo
             const register = await navigator.serviceWorker.ready;
 
-            // 4. Pulisci la vecchia sottoscrizione se esisteva
+            // rimuove vecchia sottoscrizione se esisteva
             const prevSubscription = await register.pushManager.getSubscription();
             if (prevSubscription) {
             await prevSubscription.unsubscribe();
             console.log('Rimossa vecchia sottoscrizione');
             }
 
-            // 5. Iscrivi il browser alle notifiche usando la chiave del server
+            // iscrive il browser alle notifiche usando la chiave del server
             const subscription = await register.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: publicVapidKey,
             });
 
-            // 6. Invia la sottoscrizione al server sulla porta 3000
+            // invio al server
             await fetch('http://localhost:3000/subscribe', {
             method: 'POST',
             body: JSON.stringify(subscription),
