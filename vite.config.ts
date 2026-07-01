@@ -6,8 +6,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
       includeAssets: ['logo192.png'],
+      registerType: 'autoUpdate',
+      srcDir: 'public',
+      base: './',
+      strategies: "injectManifest",
+      filename: "sw.js",
+      manifestFilename: 'manifest.json',
+      devOptions: { enabled: true },
       manifest: {
         name: "SAWProject",
         short_name: "SAWp",

@@ -1,3 +1,7 @@
+import { precacheAndRoute } from 'workbox-precaching';
+// @ts-ignore
+precacheAndRoute(self.__WB_MANIFEST || []);
+
 const CACHE_NAME = 'offlineCache';
 const OFFLINE_URL = '/off.html';
 
