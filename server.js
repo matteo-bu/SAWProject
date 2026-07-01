@@ -31,35 +31,30 @@ app.get('/vapidPublicKey', (req, res) => {
   res.send(keyPublic);
 });
 
-// 2. In-memory storage for subscribers
-let subscribers = [];
-
-app.post('/subscribe', (req, res) => {
+app.post('/subscribe', async (req, res) => {
   const subscription = req.body;
-  console.log(subscription);
   
-  // Add the new subscription to our list
-  subscribers.push(subscription);
-  
-  console.log("New user subscribed. Total subscribers:", subscribers.length);
-  res.status(201).json({});
-});
+  //trasformo endpoint in dati binari e poi in stringa
+  const docId = Buffer.from(subscription.endpoint).toString('base64');
 
-let serverPronto = false;
-// Ascolta i cambiamenti sulla collezione "projects" in tempo reale
-db.collection('projects').onSnapshot((snapshot) => {
-  // Gestisce l'attivazione iniziale per non notificare i progetti storici già presenti
-  if (!serverPronto) {
-    serverPronto = true;
-    console.log("Firestore Listener attivo sulla collezione 'projects'. Server pronto!");
-    return;
+  try {
+    await db.collection('subscribers').doc(docId).set(subscription);
+    console.log(`Nuovo utente salvato, Endpoint: ${subscription.endpoint}`);
+    res.status(201).json({});
+  } catch (err) {
+    console.error("Errore durante il salvataggio dell'iscritto:", err);
+    res.status(500).json({ error: "Errore interno" });
   }
 
-  // Intercetta i cambiamenti della collezione
-  snapshot.docChanges().forEach((change) => {
-    // Ci interessa SOLO quando viene CREATO un nuovo documento (nuovo progetto)
+});
+
+// cambiamenti sulla collezione "projects"
+db.collection('projects').onSnapshot((snapshot) => {
+
+  // quando viene creato un documento
+  snapshot.docChanges().forEach(async (change) => {
+    
     if (change.type === 'added') {
-      if (subscribers.length === 0) return;
 
       const nuovoProgetto = change.doc.data();
       const nomeProgetto = nuovoProgetto.name;
@@ -69,21 +64,29 @@ db.collection('projects').onSnapshot((snapshot) => {
         body: `È stato aggiunto il progetto: ${nomeProgetto}` 
       });
 
-      console.log(`Firestore: Rilevato nuovo progetto! Invio push a ${subscribers.length} utenti...`);
+      const snap = await db.collection('subscribers').get();
+        
+      if (snap.empty) {
+        console.log("Nessun utente iscritto");
+        return;
+      }
 
-      // Invia la notifica a tutti
-      subscribers.forEach((sub, index) => {
-        webpush.sendNotification(sub, payload).catch(err => {
+      // invia la notifica a tutti
+      snap.forEach((doc) => {
+        const sub = doc.data();
+
+        webpush.sendNotification(sub, payload).catch( async(err) => {
           console.error("Error sending or expired subscription:", err.statusCode);
           if (err.statusCode === 410 || err.statusCode === 404) {
-            subscribers.splice(index, 1);
+            await db.collection('subscribers').doc(doc.id).delete();
+            console.log(`Iscrizione obsoleta rimossa da Firestore: ${doc.id}`);
           }
         });
       });
     }
   });
 }, (error) => {
-  console.error("Errore nell'ascolto di Firestore:", error);
+  console.error("Errore: " + error);
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
