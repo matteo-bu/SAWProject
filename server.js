@@ -48,8 +48,15 @@ app.post('/subscribe', async (req, res) => {
 
 });
 
+let trueStart = false;
+
 // cambiamenti sulla collezione "projects"
 db.collection('projects').onSnapshot((snapshot) => {
+
+  if (!trueStart) {
+    trueStart = true;
+    return;
+  }
 
   // quando viene creato un documento
   snapshot.docChanges().forEach(async (change) => {
