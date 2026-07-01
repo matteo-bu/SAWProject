@@ -18,7 +18,7 @@ Node.js
 
 npm
 
-## Installazione e Build
+## Installazione
 
 git clone https://github.com/matteo-bu/SAWProject.git
 
@@ -33,6 +33,18 @@ npm run preview
 aprire su chrome o edge http://localhost:4173
 
 premere il pulsante install app nella schermata principale (aggiornare la pagina se non compare subito)
+
+## Nota Sulle Notifiche
+
+per attivare le notifiche e riceverle, serve avviare il server con il comando
+
+node server.js
+
+eseguito nella directory principale del progetto
+
+ma funziona solo se il file firebase-key.json è presente nella directory principale del progetto
+
+non sarà pubblico dato che consentirebbe il totale accesso al database
 
 ## Testing
 
