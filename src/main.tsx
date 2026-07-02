@@ -19,3 +19,19 @@ if ('serviceWorker' in navigator) {
     window.location.href = '/off.html';
   });
 }
+
+//anche se eventlistener non funziona, verifico la connessione ogni 3 secondi
+async function verifyNetworkAndRedirect() {
+    try {
+        //solo intestazione, no cache
+        await fetch('https://google.com', { 
+            method: 'HEAD', 
+            mode: 'no-cors',
+            cache: 'no-store' 
+        });
+    } catch (error) {
+         window.location.href = '/off.html';
+    }
+}
+
+setInterval(verifyNetworkAndRedirect, 3000);

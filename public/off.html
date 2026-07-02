@@ -16,11 +16,23 @@
         
         document.getElementById('retryBtn').addEventListener('click', async () => {
             
-            if (!navigator.onLine) {
+            /*if (!navigator.onLine) {
                 alert('You Are Still Offline');
             } else {
                 window.location.href = '/';
+            }*/
+
+            try {
+                await fetch('https://google.com', { 
+                    method: 'HEAD', 
+                    mode: 'no-cors',
+                    cache: 'no-store' 
+                });
+                window.location.href = '/';
+            } catch (error) {
+                alert('You Are Still Offline');
             }
+
         });
         
     </script>
